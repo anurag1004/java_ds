@@ -88,7 +88,7 @@ public class Main {
 //            System.out.println(priorityQueue.poll());
 //        }
 //        System.out.println(priorityQueue.isEmpty());
-        System.out.println("A".compareTo("B")); // A<B => -1
+        System.out.println("A".compareTo("B")); // A>B => -1
         System.out.println("B".compareTo("A")); // B>A => 1
         PriorityQueue<Character> priorityQueue2 = new PriorityQueue<Character>(new The_Comparator());
         priorityQueue2.add('A');
