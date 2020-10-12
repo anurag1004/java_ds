@@ -17,12 +17,6 @@ class MinHeap{
     private int right(int index){
         return (2*index+2);
     }
-    private void heapifyUp(int i){
-        while(i>0 && heap[parent(i)]>heap[i]){
-            swap(i,parent(i));
-            i = parent(i);
-        }
-    }
     public int getMin(){
         return heap[0];
     }
@@ -70,6 +64,14 @@ class MinHeap{
         minHeapify(0);
         return root;
     }
+    //this method will heapify the tree from top to bottom
+    private void heapifyUp(int i){
+        while(i>0 && heap[parent(i)]>heap[i]){
+            swap(i,parent(i));
+            i = parent(i);
+        }
+    }
+
     // this method will heapify the tree from top to bottom
     // This method assumes that the subtrees are already heapified
     private void minHeapify(int i){
