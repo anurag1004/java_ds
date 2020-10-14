@@ -1,7 +1,8 @@
 package com.company;
 
 import java.util.ArrayList;
-
+// another approach
+//https://www.programiz.com/dsa/circular-queue
 class CircularQueue{
     private int front,rear,size;
     private ArrayList<Integer> queue;

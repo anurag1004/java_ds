@@ -22,7 +22,7 @@ public class Main {
         // .poll This method removes and returns the head of the queue. It returns null when the queue is empty.
         System.out.println(queue.remove());
         System.out.println(queue);
-
+ 
         // Priority Queues
         Queue<String> pqueue = new PriorityQueue<String>();
         pqueue.add("Hello"); //add based on priority
