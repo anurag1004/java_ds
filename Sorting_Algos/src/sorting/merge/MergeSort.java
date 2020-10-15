@@ -1,4 +1,4 @@
-package com.merge;
+package sorting.merge;
 
 public class MergeSort {
     // array[p..r]
