@@ -6,14 +6,16 @@ public class MergeSort {
     // mergeSort(array,p,q)
     // mergeSort(array,q+1,r)
     public void mergeSort(int[] arr,int p,int r){
-        if(p>r) return;
-        int q = (p+r)/2;
-        mergeSort(arr,p,q); //first half
-        mergeSort(arr,q+1,r); // second half
+        if(p<r){
+            int q = (p+r)/2;
+            mergeSort(arr,p,q); //first half
+            mergeSort(arr,q+1,r); // second half
 
-        // divide the sub-arrays until we reached the base case
-        //  now merge both sub-arrays
-        merge(arr,p,q,r);
+            // divide the sub-arrays until we reached the base case
+            //  now merge both sub-arrays
+            merge(arr,p,q,r);
+        }
+
     }
     private void merge(int[] arr,int p,int q,int r){
         //copy array elements of first and second sub-array to a new array
@@ -26,9 +28,9 @@ public class MergeSort {
         M = new int[n2];
 
         for(int i=0;i<n1;i++)
-            L[i] = arr[i];
+            L[i] = arr[p+i];
         for(int j=0;j<n2;j++)
-            M[j] = arr[j];
+            M[j] = arr[q+1+j];
 
         // maintain current index of sub-arrays and main array
         int i,j,k;
@@ -60,7 +62,7 @@ public class MergeSort {
 
     }
     public static void main(String[] args){
-        int[] arr={9,8,0,5,4,34,89,0,-7,60};
+        int[] arr={9,8,5,4,2,100,-90,30,12,1};
         MergeSort ms=new MergeSort();
         ms.mergeSort(arr,0,arr.length-1);
         for(int x:arr){
