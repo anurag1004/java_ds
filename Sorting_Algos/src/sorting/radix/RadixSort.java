@@ -12,7 +12,6 @@ public class RadixSort {
         return max;
     }
     private void countSort(int[] arr,int size,int place){
-        int max = getMax(arr);
         int[] output = new int[size+1];
         int[] count = new int[10];
 
