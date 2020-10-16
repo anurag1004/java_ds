@@ -2,6 +2,7 @@ package sorting.quick;
 // Worst Case O(n^2)
 // Best Case O(nlog(n))
 // Avg case O(nlog(n))
+//The space complexity for quicksort is O(log n).
 class QuickSort{
     private int partition(int[] arr,int low,int high){
         int pivot = arr[high];
