@@ -1,4 +1,4 @@
-package com.graph;
+package com.bfs;
 
 import java.util.Iterator;
 import java.util.LinkedList;
