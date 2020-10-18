@@ -139,6 +139,35 @@ class BST{
             System.out.printf("%d ",root.key);
         }
     }
+    public int height(){
+        return heightRec(this.root);
+    }
+    private int heightRec(Node root){
+        if(root==null)
+            return 0;
+        int lheight = heightRec(root.left);
+        int rheight = heightRec(root.right);
+
+        if(lheight>rheight)
+            return (lheight+1);
+        return (rheight+1);
+    }
+    public void printLevelOrder(){ // bfs of binary tree
+        int h = height();
+        for(int i=1;i<=h;i++)
+            printGivenOrder(this.root,i);
+    }
+    private void printGivenOrder(Node root,int level){
+        if(root==null)
+            return;
+        if(level==1){
+            System.out.print(root.key+" ");
+        }
+        else if(level>1){
+            printGivenOrder(root.left,level-1);
+            printGivenOrder(root.right,level-1);
+        }
+    }
 }
 public class Main {
 
@@ -156,6 +185,9 @@ public class Main {
                4   8
                Level order: 10 6 12 4 8
           */
+        System.out.println("Level Order: ");
+        root.printLevelOrder();
+        System.out.println();
         root.inOrder();
         root.preOrder();
         root.postOrder();
@@ -163,5 +195,8 @@ public class Main {
         System.out.println("Key 6 found : "+root.search(6));
         root.deleteKey(10);
         root.inOrder();
+
+        System.out.println("Height : "+root.height());
+
     }
 }
