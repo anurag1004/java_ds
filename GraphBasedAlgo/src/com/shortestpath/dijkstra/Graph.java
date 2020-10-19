@@ -1,7 +1,8 @@
 package com.shortestpath.dijkstra;
 
 import java.util.Arrays;
-
+// Time Complexity O(V^2)
+// Can be reduced to O(ElogV) with binary heap
 public class Graph {
     private int V;
     private int[][] adj;
@@ -26,16 +27,19 @@ public class Graph {
         System.out.println();
     }
     public void dijkstra(int src){
+        // array to store distance of each vertex from src vertex
         int[] distance = new int[V];
+        // to track already visited vertices
         boolean[] visitedVertex = new boolean[V];
-
+        // initialize all distance with infinity
         Arrays.fill(distance,Integer.MAX_VALUE);
-
+        // Distance of self loop is zero
         distance[src] = 0;
         for(int i=0;i<V;i++){
+            // find the next vertex with minimum cost
             int u = findMinimum(visitedVertex,distance);
             visitedVertex[u] = true;
-
+            // update distance between all the neighbouring vertex from the src vertex
             for (int v=0;v<distance.length;v++){
                 if(!visitedVertex[v] && adj[u][v]!=0 && (distance[u]+adj[u][v] < distance[v])){
                     distance[v] = distance[u]+adj[u][v];
@@ -46,6 +50,7 @@ public class Graph {
             System.out.println(" "+src+" to "+j+"   "+distance[j]);
         }
     }
+    // finding the minimum distance
     private int findMinimum(boolean[] visitedVertex,int[] distance){
         int min = Integer.MAX_VALUE;
         int minVertex = -1;
