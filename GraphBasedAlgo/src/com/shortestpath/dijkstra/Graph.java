@@ -73,7 +73,6 @@ public class Graph {
         g.addEdgeDirected(3,1,6);
         g.addEdgeDirected(3,4,7);
         g.addEdgeDirected(4,3,7);
-
         g.dijkstra(0);
     }
 }
