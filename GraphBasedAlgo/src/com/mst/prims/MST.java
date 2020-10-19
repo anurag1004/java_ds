@@ -60,6 +60,14 @@ public class MST {
             no_of_edge++;
         }
     }
+    public void display_matrix(){
+        for(int i=0;i<V;i++){
+            System.out.println();
+            for (int j=0;j<V;j++){
+                System.out.print(" "+adj[i][j]);
+            }
+        }
+    }
     public static void main(String[] args) {
         MST mst = new MST(9);
         mst.addEdge(0,1,4);
