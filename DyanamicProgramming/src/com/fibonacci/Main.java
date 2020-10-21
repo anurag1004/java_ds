@@ -32,7 +32,7 @@ public class Main {
         ///////////////////////////////////////
 
         long startTime = System.nanoTime();
-        System.out.println(main.fib(450));
+        System.out.println(main.fib(100));
         long endTime   = System.nanoTime();
         long totalTime = endTime - startTime;
         System.out.println("Time Taken(ns): "+totalTime);
