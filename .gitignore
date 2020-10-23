@@ -1,3 +1,8 @@
 .idea
 .out
 out
+*.xml
+*.iml
+*.html
+*.class
+practice
