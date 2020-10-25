@@ -10,7 +10,7 @@ public class Main {
         }
         return min;
     }
-    static public String LCS(String[] strs){
+    static public String LCP(String[] strs){
         int minLen = minLength(strs);
         StringBuilder prefix = new StringBuilder();
         for(int i=0;i<minLen;i++){
@@ -26,6 +26,6 @@ public class Main {
     }
     public static void main(String[] args) {
         String[] strs = {"","a"};
-        System.out.println(LCS(strs));
+        System.out.println(LCP(strs));
     }
 }
