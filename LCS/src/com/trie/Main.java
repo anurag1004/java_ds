@@ -40,8 +40,8 @@ class Trie{
         TrieNode curr = this.root;
         StringBuilder str = new StringBuilder();
         HashMap<Character,TrieNode> children = curr.getChildren();
-        while(children.size()==1){
-            for(Character c: children.keySet()){
+        while(children.size()==1 && curr.isLeafNode()==false){
+            for(Character c: children.keySet()){ // only one iteration
                 str.append(c);
                 curr = children.get(c);
             }
@@ -53,10 +53,10 @@ class Trie{
 public class Main {
     public static void main(String[] args) {
         Trie myTrie = new Trie();
-        myTrie.insert("hellpo");
-        myTrie.insert("hellp");
-        myTrie.insert("hellpty");
-        myTrie.insert("hellpo");
+        myTrie.insert("a");
+        myTrie.insert("b");
+//        myTrie.insert("llpty");
+//        myTrie.insert("ellpo");
         System.out.println(myTrie.Longest_Common_Prefix());
     }
 }
