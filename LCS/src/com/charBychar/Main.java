@@ -1,5 +1,9 @@
 package com.charBychar;
-
+// vertical scanning
+// O(m*n)
+// m-> length of the string
+// n-> number of strings
+// Best case -> O(minLen*n)
 public class Main {
     static private int minLength(String[] strs){
         int min = strs[0].length();
