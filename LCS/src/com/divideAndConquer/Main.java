@@ -1,5 +1,7 @@
 package com.divideAndConquer;
-
+// Time complexity O(m*n)
+// m -> length of the largest string
+// n-> number of strings
 public class Main {
     static private String commonPrefix(String str1,String str2){
 
