@@ -17,11 +17,14 @@ import java.util.Set;
     Tags: Array Two Pointers
     Similar Problems:(M) 3Sum, (M) 3Sum Closest
 */
+// Time Complexity O(n^2)
+// SpaceComplexity O(1) (one variable count is used)
 public class Main {
     static int threeSumSmaller(int[] nums,int target){
         if(nums.length < 3) return Integer.MAX_VALUE;
         int n = nums.length;
         int count = 0;
+        Arrays.sort(nums); // Quick sort
         for(int i=0;i<n;i++){
             int l = i+1;
             int r = n-1;
