@@ -4,7 +4,7 @@ import java.util.*;
 // Find all unique triplets in the array which gives the sum of zero.
 //
 // Time Complexity O(n^2)
-//
+// SpaceComplexity O(logn) (based on sorting algorithm used)
 // Declare a set
 // Sort the array
 // start with one loop (say i) which selects the first number 'a' from sorted array
