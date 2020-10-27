@@ -20,28 +20,26 @@ import java.util.Set;
 public class Main {
     static int threeSumSmaller(int[] nums,int target){
         if(nums.length < 3) return Integer.MAX_VALUE;
-        Arrays.sort(nums);
         int n = nums.length;
-        Set<List<Integer>> set = new HashSet<>();
-        for(int i=0;i<n-2;i++){
-            int j=i+1;
-            int k=n-1;
-            while(j<k){
-                int sum = nums[i]+nums[j]+nums[k];
-                if(sum==target) break;
-                if(sum<target) {
-                    set.add(Arrays.asList(nums[i],nums[j],nums[k]));
-                    j++;
-                }else{
-                    k--;
-                }
+        int count = 0;
+        for(int i=0;i<n;i++){
+            int l = i+1;
+            int r = n-1;
+            while(l<r){
+                int sum = nums[i]+nums[l]+nums[r];
+                if(sum<target){
+                    count+=r-l;
+                    l++;
+                }else r--;
             }
         }
-        System.out.println(set);
-        return set.size();
+        return count;
     }
     public static void main(String[] args) {
-        int[] nums = {-2,0,1,3};
-        System.out.println(threeSumSmaller(nums,2));
+        int[] nums = {5, 1, 3, 4, 7};
+//        Below are triplets with sum less than 12
+//        (1, 3, 4), (1, 3, 5), (1, 3, 7) and
+//        (1, 4, 5)
+        System.out.println(threeSumSmaller(nums,12)); // 4
     }
 }
