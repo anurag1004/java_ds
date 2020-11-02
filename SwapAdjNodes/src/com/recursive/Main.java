@@ -63,7 +63,46 @@ class LinkedList {
             curr = new_head;
         }
         new_head.next = prev;
+        // update the current head
         head = new_head;
+    }
+    public void reverse_Till_Kth_Node(int k){
+        /*
+            First traverse the list till kth node,
+            and reverse this k length list.
+            Pick the first node of this reversed list and join with (k+1)th node
+        */
+        // maintain four pointers
+        Node prev = null;
+        Node curr = head;
+
+        // this node will be used in last step when joining first node to the (k+1)th node
+        Node dummy = new Node(-1,head);
+        Node new_head = dummy;
+        int i=0;
+        // traverse till kth node
+        while(i<k && new_head!=null){
+            new_head = new_head.next;
+            i++;
+        }
+        // if k exceeds the length of the whole list
+        if(new_head==null) return;
+
+        // start reversing k length list
+        Node temp = curr.next;
+        while (curr!=new_head){
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+            temp = temp.next;
+        }
+        curr.next = prev;
+        new_head = curr;
+
+       // Pick the first node of this reversed list and join with (k+1)th node
+        dummy.next.next = temp;
+
+        this.head = new_head;
     }
     private void swapEveryAdjNodesRecur(Node prev,Node curr){
         if(curr==null || curr.next==null) return;
@@ -88,10 +127,14 @@ public class Main {
         list.insert(2);
         list.insert(3);
         list.insert(4);
+        list.insert(5);
+        list.insert(6);
+        list.insert(7);
+        list.insert(8);
+        list.insert(9);
+        list.insert(10);
         System.out.println(list.toString());
-        list.swapEveryAdjNodes();
-        System.out.println(list.toString());
-        list.reverse();
+        list.reverse_Till_Kth_Node(11);
         System.out.println(list.toString());
     }
 }
