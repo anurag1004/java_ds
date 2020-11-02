@@ -50,6 +50,21 @@ class LinkedList {
         swapEveryAdjNodesRecur(dummy,curr);
         head = dummy.next;
     }
+    public void reverse(){
+        //  maintain three pointers
+        // prev,curr and new_head
+        Node prev = null;
+        Node curr = head;
+        Node new_head = head.next;
+        while(new_head.next!=null){
+            new_head = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = new_head;
+        }
+        new_head.next = prev;
+        head = new_head;
+    }
     private void swapEveryAdjNodesRecur(Node prev,Node curr){
         if(curr==null || curr.next==null) return;
         Node first = curr;
@@ -73,9 +88,10 @@ public class Main {
         list.insert(2);
         list.insert(3);
         list.insert(4);
-        list.insert(5);
         System.out.println(list.toString());
         list.swapEveryAdjNodes();
+        System.out.println(list.toString());
+        list.reverse();
         System.out.println(list.toString());
     }
 }
