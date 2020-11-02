@@ -51,20 +51,19 @@ class LinkedList {
         head = dummy.next;
     }
     public void reverse(){
-        //  maintain three pointers
-        // prev,curr and new_head
+        reverseUtil(this.head);
+    }
+    public void reverseUtil(Node node){
         Node prev = null;
-        Node curr = head;
-        Node new_head = head.next;
-        while(new_head.next!=null){
-            new_head = curr.next;
+        Node curr = node;
+        Node next = null;
+        while (curr!=null){
+            next = curr.next;
             curr.next = prev;
             prev = curr;
-            curr = new_head;
+            curr = next;
         }
-        new_head.next = prev;
-        // update the current head
-        head = new_head;
+        this.head = prev;
     }
     public void reverse_Till_Kth_Node(int k){
         /*
@@ -134,7 +133,7 @@ public class Main {
         list.insert(9);
         list.insert(10);
         System.out.println(list.toString());
-        list.reverse_Till_Kth_Node(11);
+        list.reverse();
         System.out.println(list.toString());
     }
 }
