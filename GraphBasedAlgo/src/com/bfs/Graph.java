@@ -48,7 +48,22 @@ class Graph {
         }
 
     }
-
+//    private static void bfsAdjMat(int v,int[][] graph){
+//        boolean[] visited = new boolean[graph.length];
+//        Queue<Integer> queue = new LinkedList<Integer>();
+//        queue.add(v);
+//        visited[v] = true;
+//        while (!queue.isEmpty()){
+//            int n = queue.poll();
+//            System.out.println(" "+n);
+//            for(int i=0;i<graph.length;i++){
+//                if(!visited[i] && graph[n][i]==1){
+//                    visited[i] = true;
+//                    queue.add(i);
+//                }
+//            }
+//        }
+//    }
     public static void main(String[] args) {
         Graph g = new Graph(10);
         Graph g2 = new Graph(4);
