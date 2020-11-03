@@ -43,6 +43,16 @@ class Graph {
                 dfs(i);
         }
     }
+    //dfs using adj matrix
+//    private static void dfsAdjMat(int v,int[][] graph,boolean[] visited){
+//        visited[v] = true;
+//        System.out.print(v+" ");
+//        for(int i=0;i<graph.length;i++) {
+//            if (graph[v][i] == 1 && !visited[i]) {
+//                dfsAdjMat(i,graph,visited);
+//            }
+//        }
+//    }
     public static void main(String[] args) {
         Graph g = new Graph(4);
         // input for a connected directed graph
