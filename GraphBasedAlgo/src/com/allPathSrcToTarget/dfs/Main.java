@@ -1,4 +1,4 @@
-package com.allPathSrcToTarget;
+package com.allPathSrcToTarget.dfs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,9 @@ public class Main {
         visited[v]  =  false; // backtrack
         return;
     }
-    public static void allPathsFromSrcToTarget(int[][] graph,int src){
+    public static void allPathsFromSrcToTarget(int[][] graph,int src,int goal){
         boolean[] visited = new boolean[graph.length];
-        int goal = graph.length-1;
+//        int goal = graph.length-1;
         List<List<Integer>> out = new ArrayList<>();
         List<Integer> path = new ArrayList<>();
         path.add(src); // adding starting point
@@ -38,6 +38,6 @@ public class Main {
                         {0,1,1,0,1,0},
                         {0,0,1,1,0,1},
                         {0,0,0,0,1,0}};
-        allPathsFromSrcToTarget(graph,0);
+        allPathsFromSrcToTarget(graph,0,1);
     }
 }
