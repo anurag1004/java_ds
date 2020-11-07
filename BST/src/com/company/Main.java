@@ -85,11 +85,11 @@ class BST{
                 // 2 children
                 // get the inorder successor
 //                root.key = inOrderSuc(root.right);
-//                //delete the inOrder Successor
+//                //delete the inOrder Successor (min of right subtree)
 //                root.right = delete_Recursive(root.right,root.key);
 
                 // OR
-                // get the inOrder predecessor
+                // get the inOrder predecessor (max of left subtree)
                 root.key = inOrderPred(root.left);
                 //delete the inOrder predecessor
                 root.left = delete_Recursive(root.left,root.key);
