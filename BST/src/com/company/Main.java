@@ -170,7 +170,7 @@ class BST{
     }
     public int LCA(int n1, int n2){
         Node lca = LCA_Recur(this.root, n1, n2);
-        return lca.key;
+        return lca==null?-1:lca.key;
     }
     // Time complexity: O(h)
     // Space : O(h)
@@ -207,7 +207,7 @@ public class Main {
         System.out.println("Level Order: ");
         root.printLevelOrder();
         System.out.println();
-        System.out.println("Lowest Common ancestor of 4 and 8 is "+root.LCA(4, 8));
+        System.out.println("Lowest Common ancestor of 4 and 8 is "+root.LCA(14, 18));
         root.inOrder();
         root.preOrder();
         root.postOrder();
