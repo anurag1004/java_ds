@@ -168,6 +168,25 @@ class BST{
             printGivenOrder(root.right,level-1);
         }
     }
+    public int LCA(int n1, int n2){
+        Node lca = LCA_Recur(this.root, n1, n2);
+        return lca.key;
+    }
+    // Time complexity: O(h)
+    // Space : O(h)
+    private Node LCA_Recur(Node root, int n1, int n2){
+        if(root==null) return null;
+        if(root.key == n1 || root.key == n2)
+            return root;
+        Node leftSearch = LCA_Recur(root.left, n1, n2);
+        Node rightSearch = LCA_Recur(root.right, n1, n2);
+        if(leftSearch!=null && rightSearch!=null) return root;
+        if(leftSearch==null&&rightSearch==null) return null;
+
+        if(leftSearch==null) return rightSearch;
+        else return leftSearch;
+
+    }
 }
 public class Main {
 
@@ -188,15 +207,15 @@ public class Main {
         System.out.println("Level Order: ");
         root.printLevelOrder();
         System.out.println();
+        System.out.println("Lowest Common ancestor of 4 and 8 is "+root.LCA(4, 8));
         root.inOrder();
         root.preOrder();
         root.postOrder();
-
+//
         System.out.println("Key 6 found : "+root.search(6));
+        System.out.println("Deleting key 10...");
         root.deleteKey(10);
         root.inOrder();
-
         System.out.println("Height : "+root.height());
-
     }
 }
