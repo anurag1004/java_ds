@@ -235,26 +235,19 @@ public class Main {
         root.insert(15);
         root.insert(25);
         root.insert(17);
-         /*        10
-                 //  \\
-                 6    12
-               // \\
-               4   8
+         /*         10
+                 //    \\
+                 6      12
+               // \\   // \\
+               4   8  11   13
+                  //        \\
+                  7          20
+                            // \\
+                           15   25
+                            \\
+                             17
                Level order: 10 6 12 4 8
           */
-        System.out.println("Level Order: ");
-        root.printLevelOrder();
-        System.out.println();
-        System.out.println("Lowest Common ancestor of 4 and 8 is "+root.LCA(14, 18));
-        root.inOrder();
-        root.preOrder();
-        root.postOrder();
-//
-        System.out.println("Key 6 found : "+root.search(6));
-//        System.out.println("Deleting key 10...");
-//        root.deleteKey(10);
-//        root.inOrder();
-        System.out.println("Height : "+root.height());
-        System.out.println(root.pathFromRoot(17));
+
     }
 }
