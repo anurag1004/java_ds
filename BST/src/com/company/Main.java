@@ -175,6 +175,24 @@ class BST{
             printGivenOrder(root.right,level-1);
         }
     }
+    public List<List<Integer>> pathToAllLeaf(){
+        List<List<Integer>> paths = new LinkedList<>();
+        if(this.root==null) return new LinkedList<>();
+        pathToAllLeaf_Recur(root, paths, new LinkedList<>());
+        return paths;
+    }
+    // dfs
+    private void pathToAllLeaf_Recur(Node root, List<List<Integer>> paths, List<Integer> curr){
+        curr.add(root.key);
+        if(root.left==null && root.right==null){ // condition for leaf node
+            paths.add(new LinkedList<>(curr));
+            return;
+        }
+        if(root.left!=null)
+            pathToAllLeaf_Recur(root.left, paths, new LinkedList<>(curr));
+        if(root.right!=null)
+            pathToAllLeaf_Recur(root.right, paths, new LinkedList<>(curr));
+    }
     public List<Integer> pathFromRoot(int dest){
         List<Integer> out = new LinkedList<>();
         List<Integer> curr = new LinkedList<>();
@@ -306,7 +324,7 @@ public class Main {
                            15   25
                             \\
                              17
-               Level order: 10 6 12 4 8
+               Level order: 10 6 12 4 8 11 13 7 20 15 25 17
           */
         System.out.println(root.findDistanceBetweenTwoNodes(11,25));
         List<Integer> longestPathFromRoot = root.longestPathFromRoot();
@@ -316,5 +334,6 @@ public class Main {
         System.out.println(longestPathFromRoot);
 
         System.out.println(root.pathFromRoot(15));
+        System.out.println(root.pathToAllLeaf());
     }
 }
