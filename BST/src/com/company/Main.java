@@ -183,11 +183,11 @@ class BST{
         return out;
     }
     public void dfsUtil(Node root, int dest, List<Integer> out, List<Integer> curr){
+        if(root==null) return;
         if(root.key==dest){
             out.addAll(curr);
             return;
         }
-        if(root==null) return;
         // check left
         if(root.left!=null) {
             curr.add(root.left.key);
@@ -314,5 +314,7 @@ public class Main {
         Collections.reverse(longestPathFromRoot);
 
         System.out.println(longestPathFromRoot);
+
+        System.out.println(root.pathFromRoot(15));
     }
 }
