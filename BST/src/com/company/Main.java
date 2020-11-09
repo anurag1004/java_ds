@@ -203,13 +203,43 @@ class BST{
             curr.remove(curr.size() - 1); // backtrack
         }
     }
-    public int LCA(int n1, int n2){
+
+    // O(n) (for finding lca) + O(n) (for calculating distance between lca node and  n1) + O(n)  (for d2)
+    // Time complexity: O(3n) ~ O(n)
+    // Space complexity: O(n) (due to recursion)
+    public int findDistanceBetweenTwoNodes(int n1, int n2){
+        Node lca = LCA(n1, n2);
+        if(lca!=null){
+            int d1 = distanceBetweenParentToNode(lca, n1,0);
+            int d2 = distanceBetweenParentToNode(lca, n2, 0);
+            return d1+d2;
+        }
+        return -1;
+    }
+    private int distanceBetweenParentToNode(Node rootNode, int destNodeVal, int currDistance){
+        if(rootNode==null) return -1;
+        if(rootNode.key == destNodeVal){
+            return currDistance;
+        }
+        // go left and increment current distance by 1
+        int left_d = distanceBetweenParentToNode(rootNode.left, destNodeVal, currDistance+1);
+        // if dest node is found on left subtree then return its distance relative to parent node
+        if(left_d!=-1) return left_d;
+
+        // else the desNode must lie on the right subtree as LCA exists only when both child nodes are present
+        // go right and increment current distance by 1
+        int right_d = distanceBetweenParentToNode(rootNode.right, destNodeVal, currDistance+1);
+        return right_d;
+    }
+
+    public Node LCA(int n1, int n2){
         Node lca = LCA_Recur(this.root, n1, n2);
-        if(ifn1present && ifn2present)
-            return lca.key;
-        else{
+        if(ifn1present && ifn2present) {
+            System.out.println("LCA of "+n1+" & "+n2+" is "+lca.key);
+            return lca;
+        }else{
             System.out.println("No LCA exists!");
-            return Integer.MIN_VALUE;
+            return null;
         }
     }
     // Time complexity: O(h)
@@ -230,10 +260,6 @@ class BST{
         return leftSearch!=null?leftSearch:rightSearch;
 
     }
-
-//    public int distanceFromRootToNode(int key){
-//
-//    }
 }
 public class Main {
 
@@ -264,6 +290,6 @@ public class Main {
                              17
                Level order: 10 6 12 4 8
           */
-        System.out.println(root.LCA(1,25));
+        System.out.println(root.findDistanceBetweenTwoNodes(11,25));
     }
 }
