@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 class BST{
     private Node root;
@@ -260,6 +258,26 @@ class BST{
         return leftSearch!=null?leftSearch:rightSearch;
 
     }
+
+    public List<Integer> longestPathFromRoot(){
+        List<Integer> out = longestPathRecur(this.root);
+        return out;
+    }
+    private List<Integer> longestPathRecur(Node root){
+        if(root==null) return new ArrayList<>();
+
+        List<Integer> left = longestPathRecur(root.left);
+        List<Integer> right = longestPathRecur(root.right);
+        if(left.size() > right.size()){
+            left.add(root.key);
+            return left;
+        }
+        else {
+            right.add(root.key);
+            return right;
+
+        }
+    }
 }
 public class Main {
 
@@ -291,5 +309,10 @@ public class Main {
                Level order: 10 6 12 4 8
           */
         System.out.println(root.findDistanceBetweenTwoNodes(11,25));
+        List<Integer> longestPathFromRoot = root.longestPathFromRoot();
+        // just reversing (as we'r using recursion the root node will be added in last call), not needed actually
+        Collections.reverse(longestPathFromRoot);
+
+        System.out.println(longestPathFromRoot);
     }
 }
