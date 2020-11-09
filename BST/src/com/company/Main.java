@@ -268,6 +268,18 @@ class BST{
 
     }
 
+    // this algo below  is same as for finding height of the tree! :)
+    public int longestPathLength(){
+        if(this.root==null) return 0;
+        return longestPathLenghtRecur(this.root);
+    }
+    private int longestPathLenghtRecur(Node root){
+        if(root==null) return 0;
+        int left = longestPathLenghtRecur(root.left);
+        int right = longestPathLenghtRecur(root.right);
+        if(left>right) return left+1;
+        return right+1;
+    }
     public List<Integer> longestPathFromRoot(){
         List<Integer> out = longestPathRecur(this.root);
         return out;
@@ -304,6 +316,8 @@ public class Main {
         root.insert(15);
         root.insert(25);
         root.insert(17);
+        root.insert(26);
+        root.insert(27);
          /*         10
                  //    \\
                  6      12
@@ -313,8 +327,10 @@ public class Main {
                   7          20
                             // \\
                            15   25
-                            \\
-                             17
+                            \\   \\
+                             17   26
+                                   \\
+                                    27
                Level order: 10 6 12 4 8 11 13 7 20 15 25 17
           */
         System.out.println(root.findDistanceBetweenTwoNodes(11,25));
@@ -326,5 +342,7 @@ public class Main {
 
         System.out.println(root.pathFromRoot(15));
         System.out.println(root.pathToAllLeaf());
+
+        System.out.println(root.longestPathLength());
     }
 }
