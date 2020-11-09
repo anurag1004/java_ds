@@ -6,6 +6,8 @@ import java.util.List;
 
 class BST{
     private Node root;
+    boolean ifn1present;
+    boolean ifn2present;
     private class Node{
         int key;
         Node left,right;
@@ -16,6 +18,8 @@ class BST{
     }
     public BST(){
         root = null;
+        ifn1present = false;
+        ifn2present = false;
     }
 
     public void insert(int key){
@@ -201,23 +205,35 @@ class BST{
     }
     public int LCA(int n1, int n2){
         Node lca = LCA_Recur(this.root, n1, n2);
-        return lca==null?-1:lca.key;
+        if(ifn1present && ifn2present)
+            return lca.key;
+        else{
+            System.out.println("No LCA exists!");
+            return Integer.MIN_VALUE;
+        }
     }
     // Time complexity: O(h)
     // Space : O(h)
     private Node LCA_Recur(Node root, int n1, int n2){
         if(root==null) return null;
-        if(root.key == n1 || root.key == n2)
+        if(root.key == n1){
+            ifn1present = true;
             return root;
+        } if (root.key == n2){
+            ifn2present = true;
+            return root;
+        }
         Node leftSearch = LCA_Recur(root.left, n1, n2);
         Node rightSearch = LCA_Recur(root.right, n1, n2);
         if(leftSearch!=null && rightSearch!=null) return root;
-        if(leftSearch==null&&rightSearch==null) return null;
 
-        if(leftSearch==null) return rightSearch;
-        else return leftSearch;
+        return leftSearch!=null?leftSearch:rightSearch;
 
     }
+
+//    public int distanceFromRootToNode(int key){
+//
+//    }
 }
 public class Main {
 
@@ -248,6 +264,6 @@ public class Main {
                              17
                Level order: 10 6 12 4 8
           */
-
+        System.out.println(root.LCA(1,25));
     }
 }
