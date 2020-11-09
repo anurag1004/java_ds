@@ -196,30 +196,21 @@ class BST{
     public List<Integer> pathFromRoot(int dest){
         List<Integer> out = new LinkedList<>();
         List<Integer> curr = new LinkedList<>();
-        curr.add(root.key);
-        dfsUtil(this.root, dest, out,curr);
+        if(this.root==null) return out;
+        dfsUtil(root, dest, out, curr);
         return out;
     }
-    public void dfsUtil(Node root, int dest, List<Integer> out, List<Integer> curr){
-        if(root==null) return;
+    private void dfsUtil(Node root, int dest, List<Integer> out, List<Integer> curr){
+        curr.add(root.key);
         if(root.key==dest){
             out.addAll(curr);
             return;
         }
-        // check left
-        if(root.left!=null) {
-            curr.add(root.left.key);
-            dfsUtil(root.left, dest, out, curr);
-            curr.remove(curr.size() - 1); // backtrack
-        }
-        // check right
-        if(root.right!=null) {
-            curr.add(root.right.key);
-            dfsUtil(root.right, dest, out, curr);
-            curr.remove(curr.size() - 1); // backtrack
-        }
+        if(root.left!=null)
+            dfsUtil(root.left, dest, out, new LinkedList<>(curr));
+        if(root.right!=null)
+            dfsUtil(root.right, dest, out, new LinkedList<>(curr));
     }
-
     // O(n) (for finding lca) + O(n) (for calculating distance between lca node and  n1) + O(n)  (for d2)
     // Time complexity: O(3n) ~ O(n)
     // Space complexity: O(n) (due to recursion)
