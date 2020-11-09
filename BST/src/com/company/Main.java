@@ -1,4 +1,9 @@
 package com.company;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 class BST{
     private Node root;
     private class Node{
@@ -168,6 +173,32 @@ class BST{
             printGivenOrder(root.right,level-1);
         }
     }
+    public List<Integer> pathFromRoot(int dest){
+        List<Integer> out = new LinkedList<>();
+        List<Integer> curr = new LinkedList<>();
+        curr.add(root.key);
+        dfsUtil(this.root, dest, out,curr);
+        return out;
+    }
+    public void dfsUtil(Node root, int dest, List<Integer> out, List<Integer> curr){
+        if(root.key==dest){
+            out.addAll(curr);
+            return;
+        }
+        if(root==null) return;
+        // check left
+        if(root.left!=null) {
+            curr.add(root.left.key);
+            dfsUtil(root.left, dest, out, curr);
+            curr.remove(curr.size() - 1); // backtrack
+        }
+        // check right
+        if(root.right!=null) {
+            curr.add(root.right.key);
+            dfsUtil(root.right, dest, out, curr);
+            curr.remove(curr.size() - 1); // backtrack
+        }
+    }
     public int LCA(int n1, int n2){
         Node lca = LCA_Recur(this.root, n1, n2);
         return lca==null?-1:lca.key;
@@ -197,6 +228,13 @@ public class Main {
         root.insert(12);
         root.insert(4);
         root.insert(8);
+        root.insert(11);
+        root.insert(13);
+        root.insert(7);
+        root.insert(20);
+        root.insert(15);
+        root.insert(25);
+        root.insert(17);
          /*        10
                  //  \\
                  6    12
@@ -213,9 +251,10 @@ public class Main {
         root.postOrder();
 //
         System.out.println("Key 6 found : "+root.search(6));
-        System.out.println("Deleting key 10...");
-        root.deleteKey(10);
-        root.inOrder();
+//        System.out.println("Deleting key 10...");
+//        root.deleteKey(10);
+//        root.inOrder();
         System.out.println("Height : "+root.height());
+        System.out.println(root.pathFromRoot(17));
     }
 }
