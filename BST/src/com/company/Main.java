@@ -30,6 +30,7 @@ class BST{
             return true;
         return false;
     }
+    // DFS - inOrder, preOrder, Postorder
     public void inOrder(){
         if(root!=null){
             System.out.println("InOrder Traversal");
@@ -159,6 +160,21 @@ class BST{
         if(lheight>rheight)
             return (lheight+1);
         return (rheight+1);
+    }
+
+    // levelOrder traversal
+    public void bfs(){
+        Queue<Node> q = new LinkedList<>();
+        q.add(this.root);
+        System.out.println();
+        while (!q.isEmpty()){
+            Node curr = q.poll();
+            if(curr!=null) {
+                System.out.print(curr.key + " ");
+                q.add(curr.left);
+                q.add(curr.right);
+            }
+        }
     }
     public void printLevelOrder(){ // bfs of binary tree
         int h = height();
@@ -361,5 +377,7 @@ public class Main {
 
         System.out.println(root.longestPathLength());
         System.out.println(root.diameter());
+
+        root.bfs();
     }
 }
