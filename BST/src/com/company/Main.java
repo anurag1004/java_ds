@@ -6,6 +6,7 @@ class BST{
     private Node root;
     boolean ifn1present;
     boolean ifn2present;
+    public int no_of_nodes;
     private class Node{
         int key;
         Node left,right;
@@ -299,6 +300,21 @@ class BST{
 
         }
     }
+
+    // if no of nodes is 'E' then no of edges is 'E-1'
+    private int depth(Node root){
+        if(root==null) return 0;
+        int l = depth(root.left);
+        int r = depth(root.right);
+        no_of_nodes = Math.max(no_of_nodes, l+r+1); // keep track of max no of nodes
+        return Math.max(l,r)+1; // return current height or depth
+    }
+    public int diameter(){
+        if(this.root==null) return 0;
+        no_of_nodes = 1; // since roots exists
+        depth(root);
+        return no_of_nodes-1; // distance between two nodes is no of nodes between them minus one;
+    }
 }
 public class Main {
 
@@ -344,5 +360,6 @@ public class Main {
         System.out.println(root.pathToAllLeaf());
 
         System.out.println(root.longestPathLength());
+        System.out.println(root.diameter());
     }
 }
