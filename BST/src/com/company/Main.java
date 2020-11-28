@@ -20,7 +20,6 @@ class BST{
         ifn1present = false;
         ifn2present = false;
     }
-
     public void insert(int key){
         root = insert_Recursive(root,key);
     }
