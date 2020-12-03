@@ -330,6 +330,21 @@ class BST{
         depth(root);
         return no_of_nodes-1; // distance between two nodes is no of nodes between them minus one;
     }
+    // inorder iterative
+    public void dfs(){
+        Stack<Node> stack = new Stack<>();
+        Node curr = this.root;
+
+        while (curr!=null || !stack.isEmpty()){
+            while (curr!=null){
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            System.out.print(curr.key+" ");
+            curr = curr.right;
+        }
+    }
 }
 public class Main {
 
@@ -364,19 +379,22 @@ public class Main {
                                     27
                Level order: 10 6 12 4 8 11 13 7 20 15 25 17
           */
-        System.out.println(root.findDistanceBetweenTwoNodes(11,25));
-        List<Integer> longestPathFromRoot = root.longestPathFromRoot();
-        // just reversing (as we'r using recursion the root node will be added in last call), not needed actually
-        Collections.reverse(longestPathFromRoot);
+//        System.out.println(root.findDistanceBetweenTwoNodes(11,25));
+//        List<Integer> longestPathFromRoot = root.longestPathFromRoot();
+//        // just reversing (as we'r using recursion the root node will be added in last call), not needed actually
+//        Collections.reverse(longestPathFromRoot);
+//
+//        System.out.println(longestPathFromRoot);
+//
+//        System.out.println(root.pathFromRoot(15));
+//        System.out.println(root.pathToAllLeaf());
+//
+//        System.out.println(root.longestPathLength());
+//        System.out.println(root.diameter());
+//
+//        root.bfs();
 
-        System.out.println(longestPathFromRoot);
-
-        System.out.println(root.pathFromRoot(15));
-        System.out.println(root.pathToAllLeaf());
-
-        System.out.println(root.longestPathLength());
-        System.out.println(root.diameter());
-
-        root.bfs();
+        root.inOrder();
+        root.dfs();
     }
 }
