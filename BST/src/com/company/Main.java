@@ -331,7 +331,7 @@ class BST{
         return no_of_nodes-1; // distance between two nodes is no of nodes between them minus one;
     }
     // inorder iterative
-    public void dfs(){
+    public void dfsInOrder(){
         Stack<Node> stack = new Stack<>();
         Node curr = this.root;
 
@@ -343,6 +343,16 @@ class BST{
             curr = stack.pop();
             System.out.print(curr.key+" ");
             curr = curr.right;
+        }
+    }
+    public void dfsPreOrder(){
+        Stack<Node> stack = new Stack<>();
+        stack.push(this.root);
+        while (!stack.isEmpty()){
+            Node node = stack.pop();
+            System.out.print(node.key+" ");
+            if(node.right!=null) stack.push(node.right);
+            if(node.left!=null) stack.push(node.left);
         }
     }
 }
@@ -394,7 +404,10 @@ public class Main {
 //
 //        root.bfs();
 
-        root.inOrder();
-        root.dfs();
+//        root.inOrder();
+//        root.dfsInOrder();
+        root.dfsPreOrder();
+        System.out.println();
+        root.preOrder();
     }
 }
