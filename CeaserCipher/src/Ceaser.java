@@ -18,7 +18,7 @@ public class Ceaser {
         for(char enc:ciphertext.toCharArray()){
             stringBuilder.append(Character.toString((char)(enc-k)));
         }
-        return stringBuilder.toString();
+        return stringBuilder.toString().toLowerCase();
     }
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
