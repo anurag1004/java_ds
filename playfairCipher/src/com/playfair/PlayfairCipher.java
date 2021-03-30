@@ -80,6 +80,10 @@ public class PlayfairCipher {
         while(i<len){
             c1 = plaintext.charAt(i);
             c2 = (i+1)>=len ? 'X':plaintext.charAt(i+1);
+            // replace J with I
+            if(c1=='J') c1 = 'I';
+            if(c2=='J') c2 = 'I';
+
             if(c1==c2){
                 c2 = 'X';
                 isRepeated = true;
@@ -88,10 +92,8 @@ public class PlayfairCipher {
             Location l1 = map.get(c1);
             Location l2 = map.get(c2);
             // if both c1 and c2 are in same row
-            if(c1=='I'&&c2=='J' || c1=='J'&&c2=='I'){
-                enc.append('P').append('R');
-            }
-            else if(l1.r == l2.r){
+
+            if(l1.r == l2.r){
                 enc.append(key[l1.r][(l1.c+1)%5]).append(key[l2.r][(l2.c+1)%5]);
             }else if(l1.c == l2.c){
                 enc.append(key[(l1.r+1)%5][l1.c]).append(key[(l2.r+1)%5][l2.c]);
@@ -108,7 +110,7 @@ public class PlayfairCipher {
     }
     public static void main(String[] args){
         PlayfairCipher pf = new PlayfairCipher();
-        char[][] mat = pf.constructKeyMatrix("playfair".toUpperCase());
-        System.out.println(pf.encrypt("oiipii".toUpperCase()));
+        char[][] mat = pf.constructKeyMatrix("GravityFalls".toUpperCase());
+        System.out.println(pf.encrypt("hello olive".toUpperCase().replaceAll("\\s","")));
     }
 }
