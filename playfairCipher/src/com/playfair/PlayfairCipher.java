@@ -108,9 +108,41 @@ public class PlayfairCipher {
         }
         return enc.toString();
     }
+    public String decrypt(String ciphertext){
+        StringBuilder decryptText = new StringBuilder();
+        // form pairs, if pair is not forming append 'X' and if letter is repeated append do same.
+        int len = ciphertext.length();
+        int i=0;
+        char c1,c2;
+        while(i<len){
+            c1 = ciphertext.charAt(i);
+            c2 = ciphertext.charAt(i+1);
+            // i and i+1 forms a pair
+            Location l1 = map.get(c1);
+            Location l2 = map.get(c2);
+            // if both c1 and c2 are in same row
+
+            if(l1.r == l2.r){
+                int col1 = l1.c>0?l1.c-1:5+(l1.c-1);
+                int col2 = l2.c>0?l2.c-1:5+(l2.c-1);
+                decryptText.append(key[l1.r][col1]).append(key[l2.r][col2]);
+            }else if(l1.c == l2.c){
+                int row1 = l1.r>0?l1.r-1:5+(l1.r-1);
+                int row2 = l2.r>0?l2.r-1:5+(l2.r-1);
+                decryptText.append(key[row1][l1.c]).append(key[row2][l2.c]);
+            }
+            else{
+                decryptText.append(key[l1.r][l2.c]).append(key[l2.r][l1.c]);
+            }
+            i+=2;
+
+        }
+        return decryptText.toString();
+    }
     public static void main(String[] args){
         PlayfairCipher pf = new PlayfairCipher();
         char[][] mat = pf.constructKeyMatrix("GravityFalls".toUpperCase());
-        System.out.println(pf.encrypt("hello olive".toUpperCase().replaceAll("\\s","")));
+        String enctext = pf.encrypt("hello world".toUpperCase().replaceAll("\\s",""));
+        System.out.println(pf.decrypt(enctext));
     }
 }
