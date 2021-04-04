@@ -327,6 +327,23 @@ class BST{
     public int maxDepthBFS(){
         return _max_depth_BFS_(this.root);
     }
+//    public int _max_depth_BFS_(Node root) {
+//        if(root==null) return 0;
+//        Node curr = root;
+//        int level = 0;
+//        Queue<TreeNode> queue = new LinkedList<>();
+//        queue.add(curr);
+//        while(!queue.isEmpty()){
+//            int size = queue.size();
+//            while(size-- > 0){
+//                curr = queue.poll();
+//                if(curr.left!=null) queue.add(curr.left);
+//                if(curr.right!=null) queue.add(curr.right);
+//            }
+//            level++;
+//        }
+//        return level;
+//    }
     public int _max_depth_BFS_(Node root) {
         if(root==null) return 0;
         Node curr = root;
