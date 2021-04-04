@@ -1,0 +1,150 @@
+package com.BT;
+
+import com.sun.source.tree.Tree;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+class TreeNode{
+    int val;
+    TreeNode left, right;
+    public TreeNode(int val){
+        left = right = null;
+        this.val = val;
+    }
+}
+class BST{
+    TreeNode root;
+    public BST(){
+        root = null;
+    }
+    public void insert(int val){
+        root = insertRec(root, val);
+    }
+    private TreeNode insertRec(TreeNode root, int val){
+        if(root==null) return new TreeNode(val);
+        if(val > root.val) root.right = insertRec(root.right, val);
+        else root.left = insertRec(root.left,val);
+        return root;
+    }
+    public void inOrder(){
+        inOrderRec(root);
+    }
+    public void preOrder(){
+        preOrderRec(root);
+    }
+    public int depth(){
+        return depthRecur(root);
+    }
+    // slower than bfs
+    public int minDepthDFS(){
+        return minDepthDFS(this.root);
+    }
+    private int minDepthDFS(TreeNode node){
+        if(root==null) return 0;
+        int left = minDepthDFS(node.left);
+        int right = minDepthDFS(node.right);
+        return (left==0 || right==0) ? left+right+1:Math.min(left, right)+1;
+    }
+    public int minDepthBFS(){
+        return minDepthBFS(this.root);
+    }
+    public int minDepthBFS(TreeNode node){
+        if(node==null) return 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(node);
+        int min = 0;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            while(size-- > 0){
+                node = queue.poll();
+                if(node.left!=null) queue.add(node.left);
+                if(node.right!=null) queue.add(node.right);
+                if(node.left==null && node.right==null) return min+1;
+            }
+            min++;
+        }
+        return min;
+    }
+    // level order traversal
+    public void bfs(){
+        TreeNode curr = root;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(curr);
+        while (!queue.isEmpty()){
+            curr = queue.poll();
+            System.out.print(" "+curr.val);
+            if(curr.left!=null) queue.add(curr.left);
+            if(curr.right!=null) queue.add(curr.right);
+        }
+    }
+    private void inOrderRec(TreeNode root){
+        if(root!=null){
+            inOrderRec(root.left);
+            System.out.print(" "+root.val);
+            inOrderRec(root.right);
+        }
+    }
+    private void preOrderRec(TreeNode root){
+        if(root!=null){
+            System.out.print(" "+root.val);
+            preOrderRec(root.left);
+            preOrderRec(root.right);
+        }
+    }
+    public void InorderDfsItr(){
+        TreeNode curr = root;
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || curr!=null){
+            while (curr!=null){
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            System.out.print(" "+curr.val);
+            curr = curr.right;
+        }
+    }
+    public void PreOrderDfsItr() {
+        TreeNode curr = root;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(curr);
+        while (!stack.isEmpty()) {
+            curr = stack.pop();
+            System.out.print(" " + curr.val);
+            if (curr.right != null) stack.push(curr.right);
+            if (curr.left != null) stack.push(curr.left);
+        }
+    }
+    private int depthRecur(TreeNode node){
+        if(node==null) return 0;
+        int lh = depthRecur(node.left);
+        int rh = depthRecur(node.right);
+        return Math.max(lh, rh)+1;
+    }
+}
+public class Main {
+    public static void main(String[] args){
+        int[] arr = {5,4,8,11,13,7,2,1};
+        BST bst = new BST();
+        for(int x:arr){
+            bst.insert(x);
+        }
+        ////////////////////////////////////
+        System.out.println("Inorder");
+        bst.inOrder();
+        System.out.println();
+        bst.InorderDfsItr();
+        ////////////////////////////////////
+        System.out.println("\nPreOrder");
+        bst.preOrder();
+        System.out.println();
+        bst.PreOrderDfsItr();
+        ///////////////////////////////////
+        System.out.println();
+        System.out.print("Depth "+bst.depth()+"\n");
+        //////////////////////////////////
+        bst.bfs();
+    }
+}
