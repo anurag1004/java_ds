@@ -324,6 +324,29 @@ class BST{
         no_of_nodes = Math.max(no_of_nodes, l+r+1); // keep track of max no of nodes
         return Math.max(l,r)+1; // return current height or depth
     }
+    public int maxDepthBFS(){
+        return _max_depth_BFS_(this.root);
+    }
+    public int _max_depth_BFS_(Node root) {
+        if(root==null) return 0;
+        Node curr = root;
+        int level = 0;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(curr);
+        queue.add(null);
+        while(!queue.isEmpty()){
+            curr = queue.poll();
+            if(curr==null){ // curr level traversed
+                level++;
+                queue.add(null);
+                if(queue.peek()==null) break; // all nodes visited
+                else continue;
+            }
+            if(curr.left!=null) queue.add(curr.left);
+            if(curr.right!=null) queue.add(curr.right);
+        }
+        return level;
+    }
     public int diameter(){
         if(this.root==null) return 0;
         no_of_nodes = 1; // since roots exists
@@ -409,5 +432,7 @@ public class Main {
         root.dfsPreOrder();
         System.out.println();
         root.preOrder();
+        System.out.println(root.height());
+        System.out.println(root.maxDepthBFS());
     }
 }

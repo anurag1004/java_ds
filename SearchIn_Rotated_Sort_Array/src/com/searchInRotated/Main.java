@@ -1,5 +1,6 @@
 package com.searchInRotated;
 
+import java.util.*;
 public class Main {
     static int findPivot(int[] nums, int left, int right){
         if(left<right){
@@ -31,5 +32,15 @@ public class Main {
             }
             System.out.println("Index "+i);
         }
+        Set<List<Integer>> set = new HashSet<>();
+        set.add(new ArrayList<>(Arrays.asList(1,2,3)));
+        set.add(new ArrayList<>(Arrays.asList(3,2,1)));
+        System.out.println(set.toString());
+        List<Integer> list = Arrays.asList(1,2,3);
+        System.out.println((ArrayList<Integer>)list.subList(0,2));
+        StringBuilder str = new StringBuilder();
+        str.append("fwef");
+        System.out.println(str.length());
+        String[] keypad = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
     }
 }
