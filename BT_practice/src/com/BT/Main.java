@@ -1,11 +1,5 @@
 package com.BT;
-
-import com.sun.source.tree.Tree;
-
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
-
+import java.util.*;
 class TreeNode{
     int val;
     TreeNode left, right;
@@ -142,6 +136,17 @@ class BST{
         if(left_search!=-1) return left_search; //target node found in left subtree
         return findDistanceFromParent(root.right, targetVal, dist);
     }
+     public List<Integer> longestPathFromRoot(TreeNode root){
+        if(root==null) return new ArrayList<>();
+        List<Integer> left = longestPathFromRoot(root.left);
+        List<Integer> right = longestPathFromRoot(root.right);
+        if(left.size()>right.size()){
+            left.add(root.val);
+            return left;
+        }
+        right.add(root.val);
+        return right;
+    }
     TreeNode LCS(int a, int b, TreeNode root){
         if(root==null) return null;
         if(root.val==a || root.val==b) return root;
@@ -180,5 +185,9 @@ public class Main {
         //////////////////////////////////
         TreeNode lcs = bst.LCS(14,39,bst.root);
         System.out.println(bst.findDistanceFromParent(lcs,14,0)+bst.findDistanceFromParent(lcs,39,0));
+        /////////////////////////////////
+        List<Integer> path = bst.longestPathFromRoot(bst.root);
+        Collections.reverse(path);
+        System.out.println(path.toString());
     }
 }
