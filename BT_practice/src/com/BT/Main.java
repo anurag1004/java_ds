@@ -131,10 +131,30 @@ class BST{
         else if(min!=null && root.val <= min || max!=null && root.val >=max) return false;
         return validate(root.left, min, root.val) && validate(root.right, root.val, max);
     }
+    public int findDistanceFromParent(TreeNode root, int targetVal, int dist){
+        if(root==null) return -1; //target value not found
+        if(root.val==targetVal){
+            //target value found
+            return dist;
+        }
+        dist++;
+        int left_search = findDistanceFromParent(root.left, targetVal, dist);
+        if(left_search!=-1) return left_search; //target node found in left subtree
+        return findDistanceFromParent(root.right, targetVal, dist);
+    }
+    TreeNode LCS(int a, int b, TreeNode root){
+        if(root==null) return null;
+        if(root.val==a || root.val==b) return root;
+        TreeNode left = LCS(a,b, root.left);
+        TreeNode right = LCS(a,b,root.right);
+        if(left!=null && right!=null) return root;
+        if(left==null) return right;
+        return left;
+    }
 }
 public class Main {
     public static void main(String[] args){
-        int[] arr = {5,4,8,11,13,7,2,1};
+        int[] arr = {5,4,8,11,13,7,2,1,15,25,23,26,14,40,39,50};
         BST bst = new BST();
         for(int x:arr){
             bst.insert(x);
@@ -154,5 +174,11 @@ public class Main {
         System.out.print("Depth "+bst.depth()+"\n");
         //////////////////////////////////
         bst.bfs();
+        //////////////////////////////////
+        System.out.println();
+        System.out.println(bst.findDistanceFromParent(bst.root, 14, 0));
+        //////////////////////////////////
+        TreeNode lcs = bst.LCS(14,39,bst.root);
+        System.out.println(bst.findDistanceFromParent(lcs,14,0)+bst.findDistanceFromParent(lcs,39,0));
     }
 }
