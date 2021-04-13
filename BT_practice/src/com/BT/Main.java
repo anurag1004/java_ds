@@ -147,6 +147,16 @@ class BST{
         right.add(root.val);
         return right;
     }
+    public void pathToAllLeafFromRoot(TreeNode root, List<List<Integer>> out, List<Integer> curr){
+        if(root==null) return;
+        curr.add(root.val);
+        if(root.left==null && root.right==null){
+            out.add(curr);
+            return;
+        }
+        pathToAllLeafFromRoot(root.left, out, new ArrayList<>(curr));
+        pathToAllLeafFromRoot(root.right, out, new ArrayList<>(curr));
+    }
     TreeNode LCS(int a, int b, TreeNode root){
         if(root==null) return null;
         if(root.val==a || root.val==b) return root;
@@ -189,5 +199,9 @@ public class Main {
         List<Integer> path = bst.longestPathFromRoot(bst.root);
         Collections.reverse(path);
         System.out.println(path.toString());
+
+        List<List<Integer>> out = new ArrayList<>();
+        bst.pathToAllLeafFromRoot(lcs,out,new ArrayList<Integer>());
+        System.out.println(out.toString());
     }
 }
