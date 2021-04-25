@@ -70,11 +70,30 @@ public class Main {
         }
         return true;
     }
+    private static String URLify(String s){
+        s = s.trim();
+        return s.replaceAll("\\s","%20");
+    }
+    private static boolean palindromePermutation(String s){
+        // to be palindrome the string must have chars with even counts and at most one count(in case of odd length string)
+        boolean foundOdd = false;
+        int[] map = new int[256];
+        for(char x:s.toCharArray()) map[x]++;
+        for(int count:map){
+            if(count%2==0)
+                continue;
+            if(foundOdd) return false;
+            foundOdd = true;
+        }
+        return true;
+    }
     public static void main(String[] args) {
         String str = "abc";
         String s ="ADOBECODEBANC";
         String t = "ABC";
         System.out.println(hasAllUniqueChars("abcdefssghijk"));
         System.out.println(arePermutation("aabcd","abacd"));
+        System.out.println(URLify("This is John Smith    "));
+        System.out.println(palindromePermutation("tactcoap"));
     }
 }
