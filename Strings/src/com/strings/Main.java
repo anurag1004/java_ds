@@ -16,7 +16,7 @@ public class Main {
             }
         }
     }
-    public static String minWindow(String s, String t){
+    private static String minWindow(String s, String t){
         if(s.length()==0 || t.length()==0) return "";
         Map<Character, Integer>  tfreq = new HashMap<>();
         for(char x:t.toCharArray()) tfreq.put(x, tfreq.getOrDefault(x,0)+1);
@@ -58,10 +58,23 @@ public class Main {
         }
         return true;
     }
+    private static boolean arePermutation(String s, String t){
+        int n1 = s.length();
+        int n2 = t.length();
+        if(n1!=n2) return false;
+        int[] map = new int[256];
+        for(char x:s.toCharArray()) map[x]++;
+        for(char x:t.toCharArray()){
+            if(map[x]<0) return false;
+            map[x]--;
+        }
+        return true;
+    }
     public static void main(String[] args) {
         String str = "abc";
         String s ="ADOBECODEBANC";
         String t = "ABC";
         System.out.println(hasAllUniqueChars("abcdefssghijk"));
+        System.out.println(arePermutation("aabcd","abacd"));
     }
 }
