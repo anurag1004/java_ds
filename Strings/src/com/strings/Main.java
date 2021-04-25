@@ -49,13 +49,19 @@ public class Main {
         }
         return ans[0]==-1?"":s.substring(ans[1], ans[2]+1);
     }
+    private static boolean hasAllUniqueChars(String s){
+        if(s.length()>256) return false;
+        boolean[] set = new boolean[256];
+        for(char x:s.toCharArray()){
+            if(set[x]) return false;
+            set[x] = true;
+        }
+        return true;
+    }
     public static void main(String[] args) {
         String str = "abc";
-        List<String> out = new ArrayList<>();
-        generatePermutations(out, new StringBuilder(), str, new boolean[str.length()]);
-        System.out.println(out.toString());
         String s ="ADOBECODEBANC";
         String t = "ABC";
-        System.out.println(minWindow(s, t));
+        System.out.println(hasAllUniqueChars("abcdefssghijk"));
     }
 }
