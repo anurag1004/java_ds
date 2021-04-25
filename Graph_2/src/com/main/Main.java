@@ -50,7 +50,7 @@ public class Main {
     }
     private static boolean isCyclic_recu(int[][] graph, boolean[] visited, boolean[] recStack, int v){
         if(recStack[v]){
-            // if already in the recursion stack, means we reached the previously visited node again
+            // if already in the recursion stack, means we reached the previously explored node again
             // cycle exists
             return true;
         }
