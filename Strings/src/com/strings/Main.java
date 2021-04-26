@@ -123,10 +123,42 @@ public class Main {
         }
         return true;
     }
+    public static String compress(String input){
+        int compressionCount = getCompressionCount(input);
+        if(input.length()<compressionCount) return input;
+        int i = 0;
+        int j = 0;
+        StringBuilder compressed = new StringBuilder(compressionCount);
+        while (i<input.length()){
+            char ch = input.charAt(i);
+            for(j=i+1;j<input.length();j++){
+                if(input.charAt(j)!=ch)
+                    break;
+            }
+            compressed.append(ch).append(j - i);
+            i = j;
+        }
+        System.out.println("Compression success!");
+        return compressed.toString();
+    }
+    private static int getCompressionCount(String input){
+        int compressionLength = 0;
+        int countConsecutive = 0;
+        for(int i=0;i<input.length();i++){
+            countConsecutive++;
+            if((i+1)>=input.length() || input.charAt(i)!=input.charAt(i+1)){
+                compressionLength += 1 + String.valueOf(countConsecutive).length();
+                countConsecutive = 0;
+            }
+        }
+        return compressionLength;
+    }
     public static void main(String[] args) {
         String str = "abc";
         String s ="ADOBECODEBANC";
         String t = "ABC";
         System.out.println(oneAway("pale","bale"));
+        String compressed = compress("aabccccddddddddddcaaa");
+        System.out.println(compressed);
     }
 }
