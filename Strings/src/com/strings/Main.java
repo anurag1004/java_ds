@@ -153,6 +153,24 @@ public class Main {
         }
         return compressionLength;
     }
+    public static int isSubstring(String str, String target){
+        int counter = 0; //pointing str
+        int i = 0;
+        for(;i<target.length();i++){
+            if(counter==str.length())
+                break;
+            if(str.charAt(counter)==target.charAt(i)){
+                counter++;
+            }else{
+                //Special case where character preceding the i'th character is duplicate
+                if(counter>0){
+                    i -= counter;
+                }
+                counter = 0;
+            }
+        }
+        return counter < str.length()?-1:i-counter;
+    }
     public static void main(String[] args) {
         String str = "abc";
         String s ="ADOBECODEBANC";
@@ -160,5 +178,8 @@ public class Main {
         System.out.println(oneAway("pale","bale"));
         String compressed = compress("aabccccddddddddddcaaa");
         System.out.println(compressed);
+        String s2 = "hhhhhhhhhhhhhhhhoiwehfoiehfiffffffoooooooorrrrrrrrrrrfffoorfor";
+        System.out.println(s2.indexOf("for"));
+        System.out.println(isSubstring("for", s2));
     }
 }
