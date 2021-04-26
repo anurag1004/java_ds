@@ -87,13 +87,46 @@ public class Main {
         }
         return true;
     }
+    public static boolean oneAway(String s, String t){
+        if(Math.abs(s.length()-t.length())>1) return false;
+        if(s.length()==t.length()){
+            return oneEditReplace(s,t);
+        }else if(s.length()+1>t.length()){
+            return oneEditInsert(s,t);
+        }else if(s.length()-1>t.length()){
+            return oneEditInsert(t,s);
+        }
+        return false;
+    }
+    private static boolean oneEditReplace(String s, String t){
+        boolean flag = false;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)!=t.charAt(i)){
+                if(flag) return false;
+                flag = true;
+            }
+        }
+        return true;
+    }
+    private static boolean oneEditInsert(String s, String t){
+        int i = 0;
+        int j = 0;
+        while(i<s.length()  && j<t.length()){
+            if(s.charAt(i)!=t.charAt(j)){
+                if(i!=j)
+                    return false;
+                j++;
+            }else{
+                i++;
+                j++;
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) {
         String str = "abc";
         String s ="ADOBECODEBANC";
         String t = "ABC";
-        System.out.println(hasAllUniqueChars("abcdefssghijk"));
-        System.out.println(arePermutation("aabcd","abacd"));
-        System.out.println(URLify("This is John Smith    "));
-        System.out.println(palindromePermutation("tactcoap"));
+        System.out.println(oneAway("pale","bale"));
     }
 }
