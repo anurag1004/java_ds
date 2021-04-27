@@ -1,4 +1,6 @@
 package com.company;
+
+import java.util.*;
 class Node{
     int val;
     Node next;
@@ -61,12 +63,36 @@ public class Main {
         }
         return prev;
     }
+    public static Node removeDuplicates(Node root){
+        Node dummy = new Node(-1, null);
+        Node prev = dummy;
+        Node nxt = root;
+        //build a set
+        Set<Integer> set = new HashSet<>();
+        while (nxt!=null){
+            if(!set.contains(nxt.val)){
+                prev.next = nxt;
+                prev = nxt;
+                set.add(nxt.val);
+            }
+            nxt = nxt.next;
+        }
+        return dummy.next;
+    }
     public static void main(String[] args) {
 	// write your code here
         LinkedList list = new LinkedList();
-        for(int i=1;i<15;i++) list.addNode(i);
+        list.addNode(1);
+        list.addNode(2);
+        list.addNode(4);
+        list.addNode(2);
+        list.addNode(6);
+        list.addNode(2);
+        list.addNode(4);
+        list.addNode(10);
+        // printNodes(list.root);
+        //  list.root = reverseKgroups(list.root, 3);
         printNodes(list.root);
-        list.root = reverseKgroups(list.root, 3);
-        printNodes(list.root);
+        printNodes(removeDuplicates(list.root));
     }
 }
