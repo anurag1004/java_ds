@@ -1,25 +1,25 @@
 package com.company;
 
 import java.util.*;
-
+class Node{
+    int key;
+    Node left,right;
+    public Node(int key){
+        this.key = key;
+        left = right = null;
+    }
+}
 class BST{
     private Node root;
     boolean ifn1present;
     boolean ifn2present;
     public int no_of_nodes;
-    private class Node{
-        int key;
-        Node left,right;
-        public Node(int key){
-            this.key = key;
-            left = right = null;
-        }
-    }
     public BST(){
         root = null;
         ifn1present = false;
         ifn2present = false;
     }
+    public Node getRoot(){ return this.root; }
     public void insert(int key){
         root = insert_Recursive(root,key);
     }
@@ -395,9 +395,70 @@ class BST{
             if(node.left!=null) stack.push(node.left);
         }
     }
+    //constructing hashtable for storing parent of each node
+    public Map<Node, Node> constructHashTable(){
+        Map<Node, Node> map = new HashMap<>();
+        constructHashTableRec(this.root, null, map);
+        return map;
+    }
+    private void constructHashTableRec(Node root, Node parent, Map<Node, Node> map){
+        if(root!=null){
+            map.put(root, parent);
+            constructHashTableRec(root.left, root, map);
+            constructHashTableRec(root.right, root, map);
+        }
+    }
+    // BIDIRECTIONAL search in the tree using HashTable
+    public List<Integer> AllNodesAtKDistance(Node root, Node target, int K){
+        Map<Node, Node> map = constructHashTable();
+        Queue<Node> queue = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+        queue.add(target);
+        visited.add(target);
+        int currLevel = 0; //target level is K from target node
+        while (!queue.isEmpty() && currLevel!=K){
+            int size = queue.size();
+            while(size-->0){
+                Node node = queue.poll();
+                Node left = node.left;
+                Node right = node.right;
+                Node parent = map.get(node);
+                if(!visited.contains(left) && left!=null){
+                    visited.add(left);
+                    queue.add(left);
+                }
+                if(!visited.contains(right) && right!=null){
+                    visited.add(right);
+                    queue.add(right);
+                }
+                if(!visited.contains(parent) && parent!=null){
+                    visited.add(parent);
+                    queue.add(parent);
+                }
+            }
+            currLevel++;
+        }
+        List<Integer> out = new ArrayList<>();
+        while (!queue.isEmpty()){
+            if(queue.peek()!=null){
+                out.add(queue.poll().key);
+            }
+        }
+        return out;
+    }
+    public Node getNodeByValue(int val){
+        return getNodeByValueRec(this.root, val);
+    }
+    private Node getNodeByValueRec(Node root, int val){
+        if(root==null) return null;
+        if(root.key==val) return root;
+        Node left_search = getNodeByValueRec(root.left, val);
+        if(left_search!=null)
+            return left_search;
+        return getNodeByValueRec(root.right, val);
+    }
 }
 public class Main {
-
     public static void main(String[] args) {
         BST root = new BST();
         root.insert(10);
@@ -446,10 +507,20 @@ public class Main {
 
 //        root.inOrder();
 //        root.dfsInOrder();
-        root.dfsPreOrder();
-        System.out.println();
-        root.preOrder();
-        System.out.println(root.height());
-        System.out.println(root.maxDepthBFS());
+//        root.dfsPreOrder();
+//        System.out.println();
+//        root.preOrder();
+//        System.out.println(root.height());
+//        System.out.println(root.maxDepthBFS());
+//        Map<Node, Node> map = root.constructHashTable();
+//        for(Map.Entry<Node, Node> entry: map.entrySet()){
+//            System.out.print("Node "+entry.getKey().key);
+//            if(entry.getValue()!=null)
+//                System.out.println(" Parent "+entry.getValue().key);
+//            else
+//                System.out.println();
+//        }
+        Node target = root.getNodeByValue(20);
+        System.out.println(root.AllNodesAtKDistance(root.getRoot(), target, 3));
     }
 }
