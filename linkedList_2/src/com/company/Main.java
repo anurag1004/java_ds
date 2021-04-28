@@ -35,6 +35,15 @@ public class Main {
         }
         System.out.println();
     }
+    public static Node getMid(Node root){
+        Node slow = root;
+        Node fast = root;
+        while (fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
     public static Node reverse(Node root){
         Node prev = null;
         Node curr = root;
@@ -46,6 +55,15 @@ public class Main {
             curr = nxt;
         }
         return prev;
+    }
+    public static boolean isPalindrome(Node root){
+        Node mid = reverse(getMid(root));
+        while (mid!=null && mid.next!=null){
+            if(root.val!=mid.val) return false;
+            root = root.next;
+            mid = mid.next;
+        }
+        return true;
     }
     public static Node reverseKgroups(Node root, int k){
         Node prev = null;
@@ -86,13 +104,15 @@ public class Main {
         list.addNode(2);
         list.addNode(4);
         list.addNode(2);
-        list.addNode(6);
+        list.addNode(999);
         list.addNode(2);
         list.addNode(4);
-        list.addNode(10);
-        // printNodes(list.root);
+        list.addNode(2);
+        list.addNode(1);
+         printNodes(list.root);
         //  list.root = reverseKgroups(list.root, 3);
-        printNodes(list.root);
-        printNodes(removeDuplicates(list.root));
+//        printNodes(list.root);
+        System.out.println(isPalindrome(list.root));
+
     }
 }
