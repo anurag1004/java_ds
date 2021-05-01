@@ -1,8 +1,6 @@
 package com.main;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
     public static void bfs(int[][] graph, int src){
@@ -73,12 +71,71 @@ public class Main {
         }
         return false;
     }
+    public static boolean routeBetweenNodesRec(int[][] graph, int vertex, int target, boolean[] visited, List<Integer> path){
+        path.add(vertex);
+        visited[vertex]=true;
+        if(vertex==target)
+            return true;
+        int[] neighbors = graph[vertex];
+        for(int neighbor: neighbors){
+            if(!visited[neighbor]) {
+                if(routeBetweenNodesRec(graph, neighbor, target, visited, path))
+                    return true;
+            }
+        }
+        path.remove(path.size()-1);
+        return false;
+    }
+    public static boolean routeBetweenNodes(int[][] graph, int src, int target){
+        Stack<Integer> stack = new Stack<>();
+        boolean[]  visited  = new boolean[graph.length];
+        stack.push(src);
+        while (!stack.isEmpty()){
+            int vertex = stack.pop();
+            if(vertex==target)
+                return true;
+            if(!visited[vertex]){
+                visited[vertex]=true;
+            }
+            int[] neighbors = graph[vertex];
+            for(int neighbor:neighbors){
+                if(!visited[neighbor])
+                    stack.push(neighbor);
+            }
+        }
+        return false;
+    }
+    public static boolean routeBetweenNodesBFS(int[][] graph, int src, int target){
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[graph.length];
+        queue.add(src);
+        visited[src] = true;
+        while (!queue.isEmpty()){
+            int vertex = queue.poll();
+            if(vertex==target)
+                return true;
+            for(int neighbor:graph[vertex]){
+                if(!visited[neighbor]){
+                    //visit it
+                    visited[neighbor] = true;
+                    // add this to the queue
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return false;
+    }
     public static void main(String[] args){
     // undirected
 //        int[][] graph = {{1,2},{0,2},{0,1,3},{2,4,5},{3,5,6},{3,4,6},{5,4}};
     // directed graph
-       int[][] graph = { {1,2}, {2}, {3}, {4,5}, {5}, {1} };
+        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
 //       dfs(graph,0);
         System.out.println(isCyclic(graph));
+        List<Integer> path = new ArrayList<>();
+        System.out.println(routeBetweenNodesRec(graph, 0, 5, new boolean[graph.length], path));
+        System.out.println(path.toString());
+        System.out.println(routeBetweenNodes(graph, 0, 5));
+        System.out.println(routeBetweenNodesBFS(graph, 0, 5));
     }
 }
