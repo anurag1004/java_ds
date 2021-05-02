@@ -176,6 +176,45 @@ class BST{
         if(left==null) return right;
         return left;
     }
+    public TreeNode getNodeByValue(int val){
+        return getNodeByValueRec(root,  val);
+    }
+    private TreeNode getNodeByValueRec(TreeNode root, int val){
+        if(root==null) return null;
+        if(root.val==val) return root;
+        TreeNode ls = getNodeByValueRec(root.left, val);
+        if(ls!=null) return ls;
+        return getNodeByValueRec(root.right, val);
+    }
+    public TreeNode inOrderSuccessor(TreeNode x){
+        // 1st case when right subtree exists
+        if(x.right!=null)
+            return getMinVal(x.right);
+        // 2nd case when right subtree don't exist
+        TreeNode parent = this.root;
+        TreeNode succ = null;
+        while (parent!=null){
+            if(parent.val>x.val){
+                succ = parent;
+                parent = parent.left;
+            }
+            else if(parent.val<x.val){
+                parent = parent.right;
+            }else{
+                break;
+            }
+        }
+        return succ;
+    }
+    private TreeNode getMinVal(TreeNode node){
+        TreeNode min = node;
+        while (node!=null){
+            min = node;
+            node = node.left;
+        }
+        return min;
+    }
+
 }
 class BinaryTree{
     TreeNode root;
@@ -284,20 +323,24 @@ public class Main {
         return out;
     }
     public static void main(String[] args){
-        int[] arr = {1,2,3,4,5,6,7};
-        BinaryTree bt = new BinaryTree();
-        for(int x:arr) bt.insert(x);
-        System.out.println("BFS");
-        bt.bfs();
-        System.out.println();
-        List<Integer> out = getTopView(bt.getRoot());
-        Iterator<Integer> it = out.iterator();
-        System.out.println("Top View");
-        while(it.hasNext()){
-            System.out.print(it.next()+" ");
-        }
-        System.out.println("\nVertical Traversal");
-        List<List<Integer>> list = getVerticalOrderTraversal(bt.getRoot());
-        System.out.println(list);
+        int[] arr = {10,6,15,4,9,11,14,16};
+        BST  bst = new BST();
+        for(int x:arr) bst.insert(x);
+        TreeNode target = bst.getNodeByValue(10);
+        System.out.println(bst.inOrderSuccessor(target).val);
+//        BinaryTree bt = new BinaryTree();
+//        for(int x:arr) bt.insert(x);
+//        System.out.println("BFS");
+//        bt.bfs();
+//        System.out.println();
+//        List<Integer> out = getTopView(bt.getRoot());
+//        Iterator<Integer> it = out.iterator();
+//        System.out.println("Top View");
+//        while(it.hasNext()){
+//            System.out.print(it.next()+" ");
+//        }
+//        System.out.println("\nVertical Traversal");
+//        List<List<Integer>> list = getVerticalOrderTraversal(bt.getRoot());
+//        System.out.println(list);
     }
 }
