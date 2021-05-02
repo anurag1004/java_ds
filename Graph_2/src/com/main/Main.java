@@ -141,7 +141,7 @@ public class Main {
             if(!visited[neighbor])
                 dfsUtil(neighbor, graph, visited, out);
         }
-        //on back track add vertex v to the stack
+        //on back track add vertex v to the front of the list i.e in reverse order
         out.add(0, v);
     }
     public static void main(String[] args){
