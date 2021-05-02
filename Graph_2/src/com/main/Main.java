@@ -125,17 +125,31 @@ public class Main {
         }
         return false;
     }
+    public static List<Integer> topologicalSortingDFS(int[][] graph){
+        // valid for only DAG
+        boolean[] visited = new boolean[graph.length];
+        List<Integer> out = new ArrayList<>();
+        for(int i=0;i<graph.length;i++){
+            if(!visited[i])
+                dfsUtil(i, graph, visited, out);
+        }
+        return out;
+    }
+    private static void dfsUtil(int v, int[][] graph, boolean[] visited, List<Integer> out){
+        visited[v] = true;
+        for(int neighbor: graph[v]){
+            if(!visited[neighbor])
+                dfsUtil(neighbor, graph, visited, out);
+        }
+        //on back track add vertex v to the stack
+        out.add(0, v);
+    }
     public static void main(String[] args){
     // undirected
 //        int[][] graph = {{1,2},{0,2},{0,1,3},{2,4,5},{3,5,6},{3,4,6},{5,4}};
     // directed graph
-        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
+        int[][] graph = { {}, {}, {3}, {1}, {0}, {0} };
 //       dfs(graph,0);
-        System.out.println(isCyclic(graph));
-        List<Integer> path = new ArrayList<>();
-        System.out.println(routeBetweenNodesRec(graph, 0, 5, new boolean[graph.length], path));
-        System.out.println(path.toString());
-        System.out.println(routeBetweenNodes(graph, 0, 5));
-        System.out.println(routeBetweenNodesBFS(graph, 0, 5));
+        System.out.println(topologicalSortingDFS(graph));
     }
 }
