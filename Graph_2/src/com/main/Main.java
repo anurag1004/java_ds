@@ -144,12 +144,55 @@ public class Main {
         //on back track add vertex v to the front of the list i.e in reverse order
         out.add(0, v);
     }
+    // can detect cycles also
+    // Khan's Algorithm for Topological Sorting in a DAG
+    public static int[] khansAlgorithmForTopoSort(int[][] graph){
+        int V = graph.length;
+        int[] in_degree = new int[V];
+        // queue always contains node with no incoming edges
+        Queue<Integer> queue = new LinkedList<>();
+        // calculate in-degree for each node
+        for(int i=0;i<V;i++){
+            for(int neighbor:graph[i]){
+                in_degree[neighbor]++;
+            }
+        }
+        // push_back nodes with in_degree as 0 to the queue
+        for(int i=0;i<V;i++){
+            if(in_degree[i]==0)
+                queue.add(i);
+        }
+        int index = 0; // will keep track of next insertion position in the order array
+        int[] order = new int[V]; // will contain final topological order
+        while (!queue.isEmpty()){
+            int v = queue.poll();
+            order[index++] = v;
+            // update its neighbor's in_degree
+            for(int neighbor:graph[v]){
+                in_degree[neighbor]--;
+                if(in_degree[neighbor]==0)
+                    queue.add(neighbor);
+            }
+        }
+        if(index!=V){
+            // cycle detected
+            return null;
+        }
+        return order;
+    }
     public static void main(String[] args){
     // undirected
 //        int[][] graph = {{1,2},{0,2},{0,1,3},{2,4,5},{3,5,6},{3,4,6},{5,4}};
     // directed graph
-        int[][] graph = { {}, {}, {3}, {1}, {0}, {0} };
+        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
 //       dfs(graph,0);
         System.out.println(topologicalSortingDFS(graph));
+        int[] order = khansAlgorithmForTopoSort(graph);
+        if(order==null) System.out.println("Cycle detected");
+        else{
+            for(int x:order){
+                System.out.print(x+" ");
+            }
+        }
     }
 }
