@@ -322,25 +322,31 @@ public class Main {
         }
         return out;
     }
+    private static int sumTree(TreeNode node){
+        if(node==null)
+            return 0;
+        if(node.left==null && node.right==null)
+            return node.val;
+        int ls = sumTree(node.left);
+        int rs = sumTree(node.right);
+        if(ls==-1 || rs==-1) return -1;
+        if( (ls==0 || rs==0) || ls+rs==node.val) return ls+rs+node.val;
+        return -1;
+    }
+    public static boolean isSumTree(TreeNode root){
+       return sumTree(root)!=-1;
+    }
     public static void main(String[] args){
-        int[] arr = {10,6,15,4,9,11,14,16};
-        BST  bst = new BST();
-        for(int x:arr) bst.insert(x);
-        TreeNode target = bst.getNodeByValue(10);
-        System.out.println(bst.inOrderSuccessor(target).val);
-//        BinaryTree bt = new BinaryTree();
-//        for(int x:arr) bt.insert(x);
-//        System.out.println("BFS");
-//        bt.bfs();
-//        System.out.println();
-//        List<Integer> out = getTopView(bt.getRoot());
-//        Iterator<Integer> it = out.iterator();
-//        System.out.println("Top View");
-//        while(it.hasNext()){
-//            System.out.print(it.next()+" ");
-//        }
-//        System.out.println("\nVertical Traversal");
-//        List<List<Integer>> list = getVerticalOrderTraversal(bt.getRoot());
-//        System.out.println(list);
+        int[] arr = {26,10,3,4,6,3};
+//        BST  bst = new BST();
+//        for(int x:arr) bst.insert(x);
+//        TreeNode target = bst.getNodeByValue(10);
+//        System.out.println(bst.inOrderSuccessor(target).val);
+        BinaryTree bt = new BinaryTree();
+        for(int x:arr) bt.insert(x);
+        System.out.println("BFS");
+        bt.bfs();
+        System.out.println();
+        System.out.println(sumTree(bt.getRoot()));
     }
 }
