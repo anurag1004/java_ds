@@ -248,13 +248,68 @@ class BinaryTree{
             }
         }
     }
+    public void delete(int val){
+        // first get the deepest node
+        TreeNode deepestNode = getDeepestNode();
+        //find the target node
+        TreeNode targetNode = getNodeByValue(val);
+        if(targetNode==null)
+            return;
+        //replace value with the deepest node
+        targetNode.val = deepestNode.val;
+        // get the parent of the target node
+        TreeNode parent = getParent(this.root, deepestNode);
+        if(parent==null)
+            return;
+        if(parent.left==deepestNode)
+            parent.left = null;
+        else
+            parent.right = null;
+    }
+    public TreeNode getNodeByValue(int val){
+        return getNodeByValueRec(root,  val);
+    }
+    private TreeNode getNodeByValueRec(TreeNode root, int val){
+        if(root==null) return null;
+        if(root.val==val) return root;
+        TreeNode ls = getNodeByValueRec(root.left, val);
+        if(ls!=null) return ls;
+        return getNodeByValueRec(root.right, val);
+    }
+    public TreeNode getParent(TreeNode parent, TreeNode child){
+        if(parent==null) return null; //no such child exists
+        if(parent.left==child || parent.right==child)
+            return parent;
+        TreeNode leftSearch = getParent(parent.left, child);
+        if(leftSearch!=null)
+            return leftSearch;
+        return getParent(parent.right, child);
+    }
+    private TreeNode getDeepestNode(){
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        TreeNode deepest = null;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for(int i=0;i<size;i++){
+                TreeNode node = queue.poll();
+                if(i==size-1)
+                    deepest = node;
+                if(node.left!=null)
+                    queue.add(node.left);
+                if(node.right!=null)
+                    queue.add(node.right);
+            }
+        }
+        return deepest;
+    }
     public void bfs(){
         TreeNode curr = root;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(curr);
         while (!queue.isEmpty()){
             curr = queue.poll();
-            System.out.print(curr.val+" ");
+            System.out.print(" "+curr.val);
             if(curr.left!=null) queue.add(curr.left);
             if(curr.right!=null) queue.add(curr.right);
         }
@@ -337,7 +392,7 @@ public class Main {
        return sumTree(root)!=-1;
     }
     public static void main(String[] args){
-        int[] arr = {26,10,3,4,6,3};
+        int[] arr = {26,10,3,4,6,8,12,13,14};
 //        BST  bst = new BST();
 //        for(int x:arr) bst.insert(x);
 //        TreeNode target = bst.getNodeByValue(10);
@@ -347,6 +402,8 @@ public class Main {
         System.out.println("BFS");
         bt.bfs();
         System.out.println();
-        System.out.println(sumTree(bt.getRoot()));
+        bt.delete(20);
+        System.out.println();
+        bt.bfs();
     }
 }
