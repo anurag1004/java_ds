@@ -1,7 +1,14 @@
 package com.main;
 
 import java.util.*;
-
+class Node{
+    int u; //vertex
+    int cost;
+    public Node(int u, int cost){
+        this.u = u;
+        this.cost = cost;
+    }
+}
 public class Main {
     public static void bfs(int[][] graph, int src){
         Queue<Integer> queue = new LinkedList<>();
@@ -180,19 +187,54 @@ public class Main {
         }
         return order;
     }
+    public static void dijkstra(int[][] graph, int V, int start){
+        // overestimating all distances
+        int[] distance = new int[V];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+
+        boolean[] visited = new boolean[V];
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingInt(n -> n.cost));
+
+        // add starting vertex to the queue adn mark it as visited
+        distance[start] = 0;
+        pq.add(new Node(start, 0));
+
+        while(!pq.isEmpty()){
+            Node node = pq.poll(); //extracting least cost vertex
+            int u = node.u;
+            visited[u] = true;
+            for(int v=0; v < graph[u].length; v++){
+                if( !visited[v] && graph[u][v] != 0 && ( distance[u] + graph[u][v] ) < distance[v] ) {
+                    distance[v] = distance[u] + graph[u][v];
+                    // visit it and add it to the queue
+                    pq.add(new Node(v, distance[v]));
+                }
+            }
+        }
+        for (int i = 0; i < distance.length; i++) {
+            System.out.println(String.format("Distance from %s to %s is %s", start, i, distance[i]));
+        }
+    }
     public static void main(String[] args){
     // undirected
 //        int[][] graph = {{1,2},{0,2},{0,1,3},{2,4,5},{3,5,6},{3,4,6},{5,4}};
     // directed graph
-        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
+//        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
 //       dfs(graph,0);
-        System.out.println(topologicalSortingDFS(graph));
-        int[] order = khansAlgorithmForTopoSort(graph);
-        if(order==null) System.out.println("Cycle detected");
-        else{
-            for(int x:order){
-                System.out.print(x+" ");
-            }
-        }
+//        System.out.println(topologicalSortingDFS(graph));
+//        int[] order = khansAlgorithmForTopoSort(graph);
+//        if(order==null) System.out.println("Cycle detected");
+//        else{
+//            for(int x:order){
+//                System.out.print(x+" ");
+//            }
+//        }
+        int[][] graph = {{0,4,0,0,0,4},
+                         {4,0,3,6,1,2},
+                         {0,3,0,2,0,0},
+                         {0,6,2,0,3,0},
+                         {0,1,0,3,0,0},
+                         {4,2,0,0,0,0}};
+        dijkstra(graph, 6,0);
     }
 }
