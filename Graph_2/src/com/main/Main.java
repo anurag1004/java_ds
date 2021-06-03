@@ -80,9 +80,44 @@ public class Main {
     }
     // detecting cycle in an undirected graph
     public static boolean isCyclicUndirected(int[][] graph){
+        // if v is already visited and there is a adjacent node u which is also visited but not the parent of v
+        // then we can say there is a cycle in the graph
         boolean[]  visited = new boolean[graph.length];
         for(int i=0;i<graph.length;i++){
             if(!visited[i] && isCyclicUndirected_helper(graph, i, -1, visited))
+                return true;
+        }
+        return false;
+    }
+    public static boolean isCyclicUndirected_BFS_helper(int[][] graph, boolean[] visited, int src){
+        int V = graph.length;
+
+        int[] parent = new int[V];
+        Arrays.fill(parent, -1);
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(src);
+        visited[src] = true;
+        while (!queue.isEmpty()){
+            int u = queue.poll();
+            for(int v:graph[u]){
+                if(!visited[v]){
+                    visited[v] = true;
+                    queue.add(v);
+                    parent[v] = u;
+                }else if(parent[u]!=v){
+                    return true;
+                }
+                // else just skip the node if it is parent of u and visited
+            }
+        }
+        return false;
+    }
+    public static boolean isCyclicUndirected_BFS(int[][] graph){
+        int V = graph.length;
+        boolean[] visited = new boolean[V];
+        for(int i=0;i<V;i++){
+            if(!visited[i] && isCyclicUndirected_BFS_helper(graph, visited, i))
                 return true;
         }
         return false;
@@ -238,7 +273,7 @@ public class Main {
     }
     public static void main(String[] args){
     // undirected
-        int[][] graph = {{1},{0,2},{1,3,6},{2,4,5},{3},{3},{2,7,8},{6},{6}};
+        int[][] graph = {{1},{0,2},{1,3,6},{2,4,5},{3,4},{3,5},{2,7,8},{6},{6},{}};
     // directed graph
 //        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
 //       dfs(graph,0);
@@ -258,5 +293,6 @@ public class Main {
 //                         {4,2,0,0,0,0}};
 //        dijkstra(graph, 6,0);
         System.out.println(isCyclicUndirected(graph));
+        System.out.println(isCyclicUndirected_BFS(graph));
     }
 }
