@@ -78,6 +78,27 @@ public class Main {
         }
         return false;
     }
+    // detecting cycle in an undirected graph
+    public static boolean isCyclicUndirected(int[][] graph){
+        boolean[]  visited = new boolean[graph.length];
+        for(int i=0;i<graph.length;i++){
+            if(!visited[i] && isCyclicUndirected_helper(graph, i, -1, visited))
+                return true;
+        }
+        return false;
+    }
+    public static boolean isCyclicUndirected_helper(int[][] graph, int v, int parent, boolean[] visited){
+        visited[v]  = true;
+        for(int u: graph[v]){
+            if(!visited[u]){
+                if(isCyclicUndirected_helper(graph, u, v, visited))
+                    return true;
+            }else if(u!=parent){
+                return true;
+            }
+        }
+        return false;
+    }
     public static boolean routeBetweenNodesRec(int[][] graph, int vertex, int target, boolean[] visited, List<Integer> path){
         path.add(vertex);
         visited[vertex]=true;
@@ -217,7 +238,7 @@ public class Main {
     }
     public static void main(String[] args){
     // undirected
-//        int[][] graph = {{1,2},{0,2},{0,1,3},{2,4,5},{3,5,6},{3,4,6},{5,4}};
+        int[][] graph = {{1},{0,2},{1,3,6},{2,4,5},{3},{3},{2,7,8},{6},{6}};
     // directed graph
 //        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
 //       dfs(graph,0);
@@ -229,12 +250,13 @@ public class Main {
 //                System.out.print(x+" ");
 //            }
 //        }
-        int[][] graph = {{0,4,0,0,0,4},
-                         {4,0,3,6,1,2},
-                         {0,3,0,2,0,0},
-                         {0,6,2,0,3,0},
-                         {0,1,0,3,0,0},
-                         {4,2,0,0,0,0}};
-        dijkstra(graph, 6,0);
+//        int[][] graph = {{0,4,0,0,0,4},
+//                         {4,0,3,6,1,2},
+//                         {0,3,0,2,0,0},
+//                         {0,6,2,0,3,0},
+//                         {0,1,0,3,0,0},
+//                         {4,2,0,0,0,0}};
+//        dijkstra(graph, 6,0);
+        System.out.println(isCyclicUndirected(graph));
     }
 }
