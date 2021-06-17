@@ -8,6 +8,14 @@ class TreeNode{
         this.val = val;
     }
 }
+class Node_<T>{
+    T val;
+    Node_<T> left, right;
+    public Node_(T val){
+        this.val = val;
+        left = right = null;
+    }
+}
 // queue obj for vertical order traversing
 class Node{
     TreeNode root;
@@ -316,6 +324,17 @@ class BinaryTree{
     }
 }
 public class Main {
+    public static Node_<Character> treeFromTernaryExpr(char[] exp, int i){
+        if(i>=exp.length)
+            return null;
+        Node_<Character> root = new Node_<Character>(exp[i]);
+        i++;
+        if(i < exp.length && exp[i]=='?')
+            root.left = treeFromTernaryExpr(exp, i+1);
+        else if(i<exp.length)
+            root.right = treeFromTernaryExpr(exp,i+1);
+        return root;
+    }
     // vertical order traversing for getting top view
     public static List<Integer> getTopView(TreeNode root){
         Map<Integer, Integer> treeMap = new HashMap<>();
@@ -391,19 +410,34 @@ public class Main {
     public static boolean isSumTree(TreeNode root){
        return sumTree(root)!=-1;
     }
+    public static int countNumberOfNodes(TreeNode root){
+        if(root==null)
+            return 0;
+        if(root.left==null && root.right==null)
+            return 1;
+        int leftCount = countNumberOfNodes(root.left);
+        int rightCount = countNumberOfNodes(root.right);
+        return leftCount + rightCount + 1;
+    }
+    public static void printPreOrder(Node_<Character> root){
+        if(root==null)
+            return;
+        System.out.print(root.val+" ");
+        printPreOrder(root.left);
+        printPreOrder(root.right);
+    }
     public static void main(String[] args){
         int[] arr = {26,10,3,4,6,8,12,13,14};
 //        BST  bst = new BST();
 //        for(int x:arr) bst.insert(x);
 //        TreeNode target = bst.getNodeByValue(10);
 //        System.out.println(bst.inOrderSuccessor(target).val);
-        BinaryTree bt = new BinaryTree();
-        for(int x:arr) bt.insert(x);
-        System.out.println("BFS");
-        bt.bfs();
-        System.out.println();
-        bt.delete(20);
-        System.out.println();
-        bt.bfs();
+//        BinaryTree bt = new BinaryTree();
+//        for(int x:arr) bt.insert(x);
+//        System.out.println(countNumberOfNodes(bt.getRoot()));
+          String exp = "a?b?c:d:e";
+          Node_<Character> expRoot = treeFromTernaryExpr(exp.toCharArray(), 0);
+          printPreOrder(expRoot);
+        System.out.println(expRoot.right.val);
     }
 }
