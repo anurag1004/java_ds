@@ -271,9 +271,40 @@ public class Main {
             System.out.println(String.format("Distance from %s to %s is %s", start, i, distance[i]));
         }
     }
+    class PQNode{
+        int u, parent;
+        int wt;
+        public PQNode(int u, int parent, int wt){
+            this.u = u;
+            this.parent = parent;
+            this.wt = wt;
+        }
+    }
+    public void prims( Map<Integer, List<int[]>> graph, int V, int start){
+        // will store next minimum edge
+        PriorityQueue<PQNode> pq  = new PriorityQueue<>((n1, n2)->n1.wt-n2.wt);
+        boolean[] visited = new boolean[V];
+        // parent of  starting vertex is null or -1 and weight is 0
+        pq.add(new PQNode(start, -1, 0));
+        while(!pq.isEmpty()){
+            PQNode node = pq.poll();
+            if(visited[node.u])
+                continue;
+            visited[node.u] = true;
+            if(node.parent!=-1){
+                System.out.println(node.parent+"--"+node.u+" "+node.wt);
+            }
+            List<int[]> neighbors = graph.get(node.u);
+            for(int[] edge: neighbors){
+                int v =  edge[0];
+                int wt = edge[1];
+                pq.add(new PQNode(v, node.u, wt));
+            }
+        }
+    }
     public static void main(String[] args){
     // undirected
-        int[][] graph = {{1},{0,2},{1,3,6},{2,4,5},{3,4},{3,5},{2,7,8},{6},{6},{}};
+//        int[][] graph = {{1},{0,2},{1,3,6},{2,4,5},{3,4},{3,5},{2,7,8},{6},{6},{}};
     // directed graph
 //        int[][] graph = { {1,2}, {}, {3}, {4,5}, {5}, {} };
 //       dfs(graph,0);
@@ -292,7 +323,24 @@ public class Main {
 //                         {0,1,0,3,0,0},
 //                         {4,2,0,0,0,0}};
 //        dijkstra(graph, 6,0);
-        System.out.println(isCyclicUndirected(graph));
-        System.out.println(isCyclicUndirected_BFS(graph));
+//        System.out.println(isCyclicUndirected(graph));
+//        System.out.println(isCyclicUndirected_BFS(graph));
+        Map<Integer, List<int[]>> adj = new HashMap<>();
+        int V =  6;
+        //  undirected connected graph
+        int[][] graph = {{0,1,1},{0,4,10},{1,4,2},{1,2,8},{4,3,15},{2,3,12},{2,5,8},{3,5,9}};
+        for(int[]  edge: graph){
+            int u = edge[0];
+            int v = edge[1];
+            int wt = edge[2];
+            if(!adj.containsKey(u))
+                adj.put(u, new ArrayList<int[]>());
+            if(!adj.containsKey(v))
+                adj.put(v, new ArrayList<int[]>());
+            adj.get(u).add(new int[]{v,  wt});
+            adj.get(v).add(new int[]{u, wt});
+        }
+        Main main = new Main();
+        main.prims(adj, V, 0);
     }
 }
