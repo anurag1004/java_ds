@@ -461,6 +461,7 @@ class BST{
 class BSTIterator{
     Stack<Node> s1 = new Stack<>();
     Node root;
+    boolean hasPeeked = false;
     public BSTIterator(Node root){
         this.root = root;
     }
@@ -475,12 +476,16 @@ class BSTIterator{
         while(root!=null){
             s1.push(root);
             root = root.left;
+            hasPeeked = true;
         }
         return s1.peek();
     }
     public int next(){
         if(!hasNext())
             return -1;
+        if(!hasPeeked)
+            peek();
+        hasPeeked = false;
         root = s1.pop();
         Node temp = root;
         root = root.right;
@@ -552,10 +557,10 @@ public class Main {
         Node target = root.getNodeByValue(20);
         System.out.println(root.AllNodesAtKDistance(root.getRoot(), target, 3));
         BSTIterator it = new BSTIterator(root.getRoot());
-        while(it.hasNext()){
-            System.out.print(it.peek().key+" ");
-            it.next();
-        }
+        it.next();
+        it.next();
+        it.next();
+        System.out.println(it.peek().key);
         System.out.println();
         root.inOrder();
     }
