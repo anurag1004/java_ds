@@ -458,6 +458,35 @@ class BST{
         return getNodeByValueRec(root.right, val);
     }
 }
+class BSTIterator{
+    Stack<Node> s1 = new Stack<>();
+    Node root;
+    public BSTIterator(Node root){
+        this.root = root;
+    }
+    public boolean hasNext(){
+        if(!s1.isEmpty() || root!=null)
+            return true;
+        return false;
+    }
+    public Node peek(){
+        if(!hasNext())
+            return null;
+        while(root!=null){
+            s1.push(root);
+            root = root.left;
+        }
+        return s1.peek();
+    }
+    public int next(){
+        if(!hasNext())
+            return -1;
+        root = s1.pop();
+        Node temp = root;
+        root = root.right;
+        return temp.key;
+    }
+}
 public class Main {
     public static void main(String[] args) {
         BST root = new BST();
@@ -522,5 +551,12 @@ public class Main {
 //        }
         Node target = root.getNodeByValue(20);
         System.out.println(root.AllNodesAtKDistance(root.getRoot(), target, 3));
+        BSTIterator it = new BSTIterator(root.getRoot());
+        while(it.hasNext()){
+            System.out.print(it.peek().key+" ");
+            it.next();
+        }
+        System.out.println();
+        root.inOrder();
     }
 }
