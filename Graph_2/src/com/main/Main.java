@@ -258,8 +258,11 @@ public class Main {
         while(!pq.isEmpty()){
             Node node = pq.poll(); //extracting least cost vertex
             int u = node.u;
+            if(visited[u])
+                continue;
             visited[u] = true;
             for(int v=0; v < graph[u].length; v++){
+                // relaxation
                 if( !visited[v] && graph[u][v] != 0 && ( distance[u] + graph[u][v] ) < distance[v] ) {
                     distance[v] = distance[u] + graph[u][v];
                     // visit it and add it to the queue
@@ -316,31 +319,31 @@ public class Main {
 //                System.out.print(x+" ");
 //            }
 //        }
-//        int[][] graph = {{0,4,0,0,0,4},
-//                         {4,0,3,6,1,2},
-//                         {0,3,0,2,0,0},
-//                         {0,6,2,0,3,0},
-//                         {0,1,0,3,0,0},
-//                         {4,2,0,0,0,0}};
-//        dijkstra(graph, 6,0);
+        int[][] graph = {{0,4,0,0,0,4},
+                         {4,0,3,6,1,2},
+                         {0,3,0,2,0,0},
+                         {0,6,2,0,3,0},
+                         {0,1,0,3,0,0},
+                         {4,2,0,0,0,0}};
+        dijkstra(graph, 6,0);
 //        System.out.println(isCyclicUndirected(graph));
 //        System.out.println(isCyclicUndirected_BFS(graph));
-        Map<Integer, List<int[]>> adj = new HashMap<>();
-        int V =  6;
-        //  undirected connected graph
-        int[][] graph = {{0,1,1},{0,4,10},{1,4,2},{1,2,8},{4,3,15},{2,3,12},{2,5,8},{3,5,9}};
-        for(int[]  edge: graph){
-            int u = edge[0];
-            int v = edge[1];
-            int wt = edge[2];
-            if(!adj.containsKey(u))
-                adj.put(u, new ArrayList<int[]>());
-            if(!adj.containsKey(v))
-                adj.put(v, new ArrayList<int[]>());
-            adj.get(u).add(new int[]{v,  wt});
-            adj.get(v).add(new int[]{u, wt});
-        }
-        Main main = new Main();
-        main.prims(adj, V, 0);
+//        Map<Integer, List<int[]>> adj = new HashMap<>();
+//        int V =  6;
+//        //  undirected connected graph
+//        int[][] graph = {{0,1,1},{0,4,10},{1,4,2},{1,2,8},{4,3,15},{2,3,12},{2,5,8},{3,5,9}};
+//        for(int[]  edge: graph){
+//            int u = edge[0];
+//            int v = edge[1];
+//            int wt = edge[2];
+//            if(!adj.containsKey(u))
+//                adj.put(u, new ArrayList<int[]>());
+//            if(!adj.containsKey(v))
+//                adj.put(v, new ArrayList<int[]>());
+//            adj.get(u).add(new int[]{v,  wt});
+//            adj.get(v).add(new int[]{u, wt});
+//        }
+//        Main main = new Main();
+//        main.prims(adj, V, 0);
     }
 }
