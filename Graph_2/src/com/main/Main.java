@@ -345,5 +345,24 @@ public class Main {
 //        }
 //        Main main = new Main();
 //        main.prims(adj, V, 0);
+        DisjointSet ds = new DisjointSet(7);
+        ds.unionByRank(0, 1);
+        ds.unionByRank(1, 2);
+        ds.unionByRank(3, 4);
+        ds.unionByRank(5, 6);
+        ds.unionByRank(4, 5);
+
+        // if 2 and 6 same or not
+        if (ds.find(2) == ds.find(6)) {
+            System.out.println("Same");
+        } else
+            System.out.println("Not Same");
+
+//        ds.unionByRank(2, 6);
+        ds.unionBySize(2,6);
+        if (ds.find(2) == ds.find(6)) {
+            System.out.println("Same");
+        } else
+            System.out.println("Not Same");
     }
 }
